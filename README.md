@@ -108,3 +108,27 @@ The application structure is organized as follows:
   - `store/`: Contains Redux store files.
     - `authStore.ts`: Redux store for authentication.
     - `pageStore.ts`: Redux store for pages.
+
+## Storybook
+
+This project uses Storybook for component development and testing.
+
+### Running Storybook
+
+To start Storybook, run the following command:
+
+```bash
+npm run storybook
+```
+
+This will open Storybook in your browser at http://localhost:6006.
+
+### Building Storybook
+
+To build Storybook, run the following command:
+
+```bash
+npm run storybook:build
+```
+
+This will create a static Storybook build in the `storybook-static` directory.

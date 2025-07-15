@@ -1,5 +1,7 @@
 import React from 'react';
 import { usePageStore } from '../store/pageStore';
+import Module1Navigation from './custom-component/Module1Navigation';
+import Module2Navigation from './custom-component/Module2Navigation';
 
 interface SidePanelProps {
   isOpen: boolean;
@@ -8,14 +10,10 @@ interface SidePanelProps {
 const SidePanel: React.FC<SidePanelProps> = ({ isOpen }) => {
   const { setCurrentPage } = usePageStore();
 
-  const handleNavigation = (page: string) => {
-    setCurrentPage(page);
-  };
-
   return (
     <div
       style={{
-        width: isOpen ? '200px' : '0',
+        width: isOpen ? '200px' : '10px',
         backgroundColor: '#f0f0f0',
         height: '100vh',
         overflowX: 'hidden',
@@ -23,18 +21,8 @@ const SidePanel: React.FC<SidePanelProps> = ({ isOpen }) => {
         paddingTop: '60px',
       }}
     >
-      <h2>Navigation</h2>
-      <ul>
-        <li>
-          <button onClick={() => handleNavigation('dashboard')}>Dashboard</button>
-        </li>
-        <li>
-          <button onClick={() => handleNavigation('profile')}>Profile</button>
-        </li>
-        <li>
-          <button onClick={() => handleNavigation('settings')}>Settings</button>
-        </li>
-      </ul>
+      <Module1Navigation />
+      <Module2Navigation />
     </div>
   );
 };
