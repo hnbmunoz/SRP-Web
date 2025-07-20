@@ -9,10 +9,14 @@ const PrivateRoutes = () => {
   return (
     <>
       <Header />
-      <SidePanel isOpen={isOpen} setIsOpen={setIsOpen} />
-      <Routes>
-        <Route path="/" element={<h1>Dashboard</h1>} />
-      </Routes>
+      <div style={{ display: 'flex' }}>
+        <SidePanel isOpen={isOpen} setIsOpen={setIsOpen} />
+        <div style={{ flex: 1 }}>
+          <Routes>
+            <Route path="/" element={<h1>Dashboard</h1>} />
+          </Routes>
+        </div>
+      </div>
     </>
   );
 };
