@@ -24,8 +24,8 @@ const SidePanel: React.FC<SidePanelProps> = ({ isOpen, setIsOpen }) => {
       className={`${styles['side-panel']} ${isOpen ? styles[''] : styles.collapsed}`}
     >
       <SidePanelToggleButton isOpen={isOpen} toggleSidePanel={toggleSidePanel} />
-      <NavigationAccordion data={sampleData[0]} />
-      <NavigationAccordion data={sampleData[1]} />
+      <NavigationAccordion data={sampleData[0]} isOpen={isOpen} />
+      <NavigationAccordion data={sampleData[1]} isOpen={isOpen} />
     </div>
   );
 };

@@ -10,15 +10,28 @@
     color: $text-primary;
     cursor: pointer;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: flex-start;
+
+    .accordion-title {
+      display: block;
+      margin-left: 10px;
+    }
 
     .arrow {
       transition: transform 0.3s ease;
+      margin-left: auto;
 
       &.open {
         transform: rotate(180deg);
       }
+    }
+  }
+
+  &.collapsed .navigation-accordion-header {
+    justify-content: center;
+    .accordion-title {
+      display: none;
     }
   }
 

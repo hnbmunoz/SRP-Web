@@ -1,27 +1,30 @@
 import React, { useState } from 'react';
 import styles from './NavigationAccordion.module.scss';
+import { FaHome } from 'react-icons/fa';
 
 interface NavigationAccordionProps {
   data: {
     title: string;
     items: string[];
   };
+  isOpen: boolean;
 }
 
-const NavigationAccordion: React.FC<NavigationAccordionProps> = ({ data }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const NavigationAccordion: React.FC<NavigationAccordionProps> = ({ data, isOpen }) => {
+  const [isAccordionOpen, setIsAccordionOpen] = useState(false);
 
   const toggleAccordion = () => {
-    setIsOpen(!isOpen);
+    setIsAccordionOpen(!isAccordionOpen);
   };
 
   return (
-    <div className={styles['navigation-accordion']}>
+    <div className={`${styles['navigation-accordion']} ${!isOpen ? styles.collapsed : ''}`}>
       <div className={styles['navigation-accordion-header']} onClick={toggleAccordion}>
-        {data.title}
-        <span className={`${styles.arrow} ${isOpen ? styles.open : ''}`}>&#9660;</span>
+        <FaHome />
+        <span className={styles['accordion-title']}>{data.title}</span>
+        <span className={`${styles.arrow} ${isAccordionOpen ? styles.open : ''}`}>&#9660;</span>
       </div>
-      <div className={`${styles['navigation-accordion-content']} ${isOpen ? styles.open : ''}`}>
+      <div className={`${styles['navigation-accordion-content']} ${isAccordionOpen ? styles.open : ''}`}>
         <ul>
           {data.items.map((item, index) => (
             <li key={index}>{item}</li>
