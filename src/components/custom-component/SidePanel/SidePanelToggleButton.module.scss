@@ -1,0 +1,26 @@
+@import '../../../assets/styles/_themes.scss';
+
+.toggle-button {
+  position: relative;
+  top: 0;
+  right: 0;
+  background-color: transparent;
+  border: none;
+  color: $text-primary;
+  font-size: 1.5em;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  outline: none;
+  transform: rotate(0deg);
+
+  &:focus,
+  &:focus-visible,
+  &:active {
+    outline: none;
+    box-shadow: none;
+  }
+
+  &.collapsed {
+    transform: rotate(180deg);
+  }
+}

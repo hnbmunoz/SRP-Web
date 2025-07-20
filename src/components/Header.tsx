@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './Header.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
-
+ 
 const Header = () => {
   const navigate = useNavigate();
   const { clearToken } = useAuthStore();

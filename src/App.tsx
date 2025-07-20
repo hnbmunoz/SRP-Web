@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import PublicRoutes from './routes/PublicRoutes';
 import PrivateRoutes from './routes/PrivateRoutes';
-import NotFound from './components/NotFound';
 import './App.css';
 import { useAuthStore } from './store/authStore';
 
