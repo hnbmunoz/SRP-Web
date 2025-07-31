@@ -1,44 +1,106 @@
+// Medical-themed header styles
 .header {
-  background-color: #cce3e7;
-  color: #37474f;
-  padding: 0.625rem;
+  background: linear-gradient(135deg, #007bbf 0%, #009688 100%);
+  color: white;
+  padding: 0.75rem 1.25rem;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
   position: relative;
   z-index: 1000;
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 123, 191, 0.2);
+  border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.1);
 }
 
 .leftSection {
   display: flex;
   align-items: center;
   gap: 1rem;
+  flex: 1;
+}
+
+.branding {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logo {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(0.625rem);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0.125rem solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+  }
+}
+
+.logoIcon {
+  font-size: 1.25rem;
+  color: white;
+  filter: drop-shadow(0 0.0625rem 0.125rem rgba(0, 0, 0, 0.2));
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+
+  @media (max-width: 48rem) {
+    display: none;
+  }
+}
+
+.brandTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+  color: white;
+  text-shadow: 0 0.0625rem 0.125rem rgba(0, 0, 0, 0.2);
+  letter-spacing: -0.025rem;
+}
+
+.brandSubtitle {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
 }
 
 .burgerButton {
-  background: none;
-  border: none;
-  color: #37474f;
-  font-size: 1.2rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(0.625rem);
+  border: 0.0625rem solid rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 1rem;
   cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 0.25rem;
-  transition: background-color 0.2s ease;
+  padding: 0.625rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
 
   &:hover {
-    background-color: rgba(55, 71, 79, 0.1);
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-0.0625rem);
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
   }
 
   &:focus {
-    outline: 0.125rem solid #90c292;
+    outline: 0.125rem solid rgba(255, 255, 255, 0.5);
     outline-offset: 0.125rem;
   }
 
@@ -48,8 +110,49 @@
   }
 }
 
-.title {
+.rightSection {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(0.625rem);
+  border-radius: 2rem;
+  border: 0.0625rem solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  @media (max-width: 48rem) {
+    display: none;
+  }
+}
+
+.welcomeText {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.9);
   font-weight: 500;
+}
+
+.userAvatar {
+  width: 2rem;
+  height: 2rem;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  color: white;
+  border: 0.0625rem solid rgba(255, 255, 255, 0.3);
 }
 
 .dropdown {
@@ -58,35 +161,170 @@
 }
 
 .dropdownButton {
-  background-color: #90c292;
-  color: #37474f;
-  padding: 0.625rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(0.625rem);
+  color: white;
+  padding: 0.75rem;
   font-size: 1rem;
-  border: none;
+  border: 0.0625rem solid rgba(255, 255, 255, 0.2);
   cursor: pointer;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-0.0625rem);
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
+  }
+
+  &:focus {
+    outline: 0.125rem solid rgba(255, 255, 255, 0.5);
+    outline-offset: 0.125rem;
+  }
+}
+
+.settingsIcon {
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+
+  .dropdownButton:hover & {
+    transform: rotate(90deg);
+  }
 }
 
 .dropdownContent {
   display: none;
   position: absolute;
-  background-color: #e3e3e3;
-  min-width: 10rem;
-  box-shadow: 0 0.5rem 1rem 0 rgba(0,0,0,0.2);
-  z-index: 1;
   right: 0;
+  top: calc(100% + 0.5rem);
+  background: white;
+  min-width: 12rem;
+  border-radius: 0.75rem;
+  box-shadow: 
+    0 0.5rem 2rem rgba(0, 123, 191, 0.15),
+    0 0.25rem 1rem rgba(0, 0, 0, 0.1);
+  z-index: 1001;
+  border: 0.0625rem solid rgba(0, 123, 191, 0.1);
+  overflow: hidden;
+  backdrop-filter: blur(0.625rem);
+  animation: dropdownSlide 0.3s ease;
+
+  .dropdown:hover & {
+    display: block;
+  }
 }
 
-.dropdownContent a {
-  color: black;
-  padding: 0.75rem 1rem;
+@keyframes dropdownSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdownItem {
+  color: #2c3e50;
+  padding: 0.875rem 1.25rem;
   text-decoration: none;
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+
+  &:hover {
+    background: linear-gradient(135deg, rgba(0, 123, 191, 0.1) 0%, rgba(0, 150, 136, 0.1) 100%);
+    color: #007bbf;
+    transform: translateX(0.25rem);
+  }
+
+  &:focus {
+    outline: 0.125rem solid rgba(0, 123, 191, 0.3);
+    outline-offset: -0.125rem;
+    background: linear-gradient(135deg, rgba(0, 123, 191, 0.1) 0%, rgba(0, 150, 136, 0.1) 100%);
+  }
 }
 
-.dropdownContent a:hover {
-  background-color: #ddd;
+.dropdownIcon {
+  font-size: 0.875rem;
+  color: #7f8c8d;
+  transition: color 0.3s ease;
+
+  .dropdownItem:hover & {
+    color: #007bbf;
+  }
 }
 
-.dropdown:hover .dropdownContent {
-  display: block;
+.dropdownDivider {
+  height: 0.0625rem;
+  background: linear-gradient(90deg, transparent 0%, rgba(0, 123, 191, 0.2) 50%, transparent 100%);
+  margin: 0.5rem 0;
+}
+
+// Responsive adjustments
+@media (max-width: 30rem) {
+  .header {
+    padding: 0.625rem 1rem;
+  }
+
+  .branding {
+    gap: 0.5rem;
+  }
+
+  .logo {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .logoIcon {
+    font-size: 1rem;
+  }
+
+  .dropdownContent {
+    min-width: 10rem;
+    right: -1rem;
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .header {
+    background: #000;
+    border-bottom: 0.125rem solid #fff;
+  }
+
+  .dropdownContent {
+    background: #fff;
+    border: 0.125rem solid #000;
+  }
+
+  .dropdownItem {
+    color: #000;
+    
+    &:hover {
+      background: #f0f0f0;
+      color: #000;
+    }
+  }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
