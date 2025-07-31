@@ -203,17 +203,22 @@
   background: white;
   min-width: 12rem;
   border-radius: 0.75rem;
-  box-shadow: 
+  box-shadow:
     0 0.5rem 2rem rgba(0, 123, 191, 0.15),
     0 0.25rem 1rem rgba(0, 0, 0, 0.1);
   z-index: 1001;
   border: 0.0625rem solid rgba(0, 123, 191, 0.1);
   overflow: hidden;
   backdrop-filter: blur(0.625rem);
+  opacity: 0;
+  transform: translateY(-0.5rem);
+  transition: opacity 0.3s ease, transform 0.3s ease;
   animation: dropdownSlide 0.3s ease;
-
-  .dropdown:hover & {
+  
+  &.dropdownOpen {
     display: block;
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

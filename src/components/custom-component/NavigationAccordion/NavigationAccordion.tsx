@@ -1,23 +1,8 @@
 import React, { useState } from 'react';
 import styles from './NavigationAccordion.module.scss';
-import {
-  FaChevronDown,
-  FaUserMd,
-  FaCalendarAlt,
-  FaClipboardList,
-  FaPrescriptionBottleAlt,
-  FaHeartbeat,
-  FaStethoscope,
-  FaHospital,
-  FaAmbulance,
-  FaUserInjured,
-  FaFileMedical,
-  FaVials,
-  FaSyringe,
-  FaXRay,
-  FaPills
-} from 'react-icons/fa';
+import { FaChevronDown } from 'react-icons/fa';
 import { useSidePanelContext } from '../../../contexts/SidePanelContext';
+import { getMedicalIcon } from '../../custom-templates/MedicalIconMapper';
 
 interface NavigationAccordionProps {
   title: string;
@@ -28,57 +13,6 @@ interface NavigationAccordionProps {
   onNavigate?: (item: string, module: string) => void;
 }
 
-// Medical icon mapping
-const getMedicalIcon = (title: string, itemName?: string) => {
-  const titleLower = title.toLowerCase();
-  const itemLower = itemName?.toLowerCase() || '';
-
-  // Main module icons
-  if (titleLower.includes('patient') || titleLower.includes('module 1')) {
-    return <FaUserInjured className={styles.medicalIcon} />;
-  }
-  if (titleLower.includes('appointment') || titleLower.includes('module 2')) {
-    return <FaCalendarAlt className={styles.medicalIcon} />;
-  }
-  if (titleLower.includes('doctor') || titleLower.includes('physician')) {
-    return <FaUserMd className={styles.medicalIcon} />;
-  }
-  if (titleLower.includes('prescription') || titleLower.includes('medication')) {
-    return <FaPrescriptionBottleAlt className={styles.medicalIcon} />;
-  }
-  if (titleLower.includes('emergency') || titleLower.includes('urgent')) {
-    return <FaAmbulance className={styles.medicalIcon} />;
-  }
-  if (titleLower.includes('lab') || titleLower.includes('test')) {
-    return <FaVials className={styles.medicalIcon} />;
-  }
-
-  // Sub-item icons
-  if (itemLower.includes('record') || itemLower.includes('file')) {
-    return <FaFileMedical className={styles.medicalIcon} />;
-  }
-  if (itemLower.includes('vital') || itemLower.includes('monitor')) {
-    return <FaHeartbeat className={styles.medicalIcon} />;
-  }
-  if (itemLower.includes('exam') || itemLower.includes('checkup')) {
-    return <FaStethoscope className={styles.medicalIcon} />;
-  }
-  if (itemLower.includes('ward') || itemLower.includes('room')) {
-    return <FaHospital className={styles.medicalIcon} />;
-  }
-  if (itemLower.includes('injection') || itemLower.includes('vaccine')) {
-    return <FaSyringe className={styles.medicalIcon} />;
-  }
-  if (itemLower.includes('scan') || itemLower.includes('imaging')) {
-    return <FaXRay className={styles.medicalIcon} />;
-  }
-  if (itemLower.includes('medicine') || itemLower.includes('drug')) {
-    return <FaPills className={styles.medicalIcon} />;
-  }
-
-  // Default icons
-  return <FaClipboardList className={styles.medicalIcon} />;
-};
 
 const NavigationAccordion: React.FC<NavigationAccordionProps> = ({
   title,
@@ -118,7 +52,7 @@ const NavigationAccordion: React.FC<NavigationAccordionProps> = ({
         aria-expanded={isOpen}
         aria-controls={`accordion-content-${title.replace(/\s+/g, '-').toLowerCase()}`}
       >
-        {getMedicalIcon(title)}
+        {getMedicalIcon(title, undefined, styles.medicalIcon)}
         {sidePanelIsOpen && <span className={styles.accordionTitle}>{title}</span>}
         <FaChevronDown
           className={`${styles.arrow} ${isOpen ? styles.open : ''}`}
@@ -146,7 +80,7 @@ const NavigationAccordion: React.FC<NavigationAccordionProps> = ({
                 }}
                 aria-label={`Navigate to ${item} in ${title}`}
               >
-                {getMedicalIcon(title, item)}
+                {getMedicalIcon(title, item, styles.medicalIcon)}
                 {sidePanelIsOpen &&  <span className={styles.itemText}>{item}</span> }
               </button>
             </li>

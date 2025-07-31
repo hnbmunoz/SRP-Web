@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import styles from './Header.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
@@ -9,10 +9,26 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   const { clearToken } = useAuthStore();
   const { toggleSidePanel } = useSidePanelContext();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const timeoutRef = useRef<number | null>(null);
 
   const handleLogout = () => {
     clearToken();
     navigate('/');
+  };
+
+  const handleMouseEnter = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    setIsDropdownOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setIsDropdownOpen(false);
+    }, 100);
   };
 
   return (
@@ -44,11 +60,15 @@ const Header: React.FC = () => {
           </div>
         </div>
         
-        <div className={styles.dropdown}>
+        <div
+          className={styles.dropdown}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
           <button className={styles.dropdownButton} aria-label="User menu">
             <FaCog className={styles.settingsIcon} />
           </button>
-          <div className={styles.dropdownContent}>
+          <div className={`${styles.dropdownContent} ${isDropdownOpen ? styles.dropdownOpen : ''}`}>
             <a href="#" className={styles.dropdownItem}>
               <FaUser className={styles.dropdownIcon} />
               Profile Settings
