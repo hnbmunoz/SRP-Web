@@ -2,16 +2,12 @@ import React, { useEffect } from 'react';
 import { usePageStore } from '../../../store/pageStore';
 import NavigationAccordion from '../NavigationAccordion/NavigationAccordion';
 import styles from './SidePanel.module.scss';
-import type { Dispatch, SetStateAction } from 'react';
 import { FaTimes, FaStethoscope } from 'react-icons/fa';
 import SidePanelToggleButton from './SidePanelToggleButton';
+import { useSidePanelContext } from '../../../contexts/SidePanelContext';
 
-interface SidePanelProps {
-  isOpen: boolean;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
-}
-
-const SidePanel: React.FC<SidePanelProps> = ({ isOpen, setIsOpen }) => {
+const SidePanel: React.FC = () => {
+  const { isOpen, setIsOpen, toggleSidePanel } = useSidePanelContext();
   const {  } = usePageStore();
   
   // State for managing individual accordion open/close states
@@ -64,9 +60,6 @@ const SidePanel: React.FC<SidePanelProps> = ({ isOpen, setIsOpen }) => {
     setIsOpen(false);
   };
 
-  const toggleSidePanel = () => {
-    setIsOpen(!isOpen);
-  };
 
   // Close panel when clicking outside (mobile only)
   const handleOverlayClick = (e: React.MouseEvent) => {
@@ -159,23 +152,10 @@ const SidePanel: React.FC<SidePanelProps> = ({ isOpen, setIsOpen }) => {
         aria-label="Medical navigation menu"
       >
         {/* Toggle Button - Always visible on tablet/desktop */}
-        <div className={styles.toggleContainer}>
+        <div className={styles.Header}>
           <SidePanelToggleButton isOpen={isOpen} toggleSidePanel={toggleSidePanel} />
         </div>
 
-        <div className={styles.header}>
-          <h2 className={styles.title}>
-            <FaStethoscope className={styles.titleIcon} />
-            MedPortal
-          </h2>
-          <button
-            className={styles.closeButton}
-            onClick={closeSidePanel}
-            aria-label="Close medical navigation menu"
-          >
-            <FaTimes />
-          </button>
-        </div>
         
         <div className={styles.content}>
           <div className={styles.navigationSection}>

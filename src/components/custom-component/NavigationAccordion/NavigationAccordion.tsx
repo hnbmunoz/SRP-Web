@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styles from './NavigationAccordion.module.scss';
-import { 
-  FaChevronDown, 
-  FaUserMd, 
-  FaCalendarAlt, 
-  FaClipboardList, 
+import {
+  FaChevronDown,
+  FaUserMd,
+  FaCalendarAlt,
+  FaClipboardList,
   FaPrescriptionBottleAlt,
   FaHeartbeat,
   FaStethoscope,
@@ -17,6 +17,7 @@ import {
   FaXRay,
   FaPills
 } from 'react-icons/fa';
+import { useSidePanelContext } from '../../../contexts/SidePanelContext';
 
 interface NavigationAccordionProps {
   title: string;
@@ -88,6 +89,7 @@ const NavigationAccordion: React.FC<NavigationAccordionProps> = ({
 }) => {
   const [internalIsOpen, setInternalIsOpen] = useState(false);
   const isOpen = controlledIsOpen !== undefined ? controlledIsOpen : internalIsOpen;
+  const { isOpen: sidePanelIsOpen } = useSidePanelContext();
 
   const toggleAccordion = () => {
     if (onToggle) {
@@ -117,8 +119,8 @@ const NavigationAccordion: React.FC<NavigationAccordionProps> = ({
         aria-controls={`accordion-content-${title.replace(/\s+/g, '-').toLowerCase()}`}
       >
         {getMedicalIcon(title)}
-        <span className={styles.accordionTitle}>{title}</span>
-        <FaChevronDown 
+        {sidePanelIsOpen && <span className={styles.accordionTitle}>{title}</span>}
+        <FaChevronDown
           className={`${styles.arrow} ${isOpen ? styles.open : ''}`}
           aria-hidden="true"
         />
@@ -145,7 +147,7 @@ const NavigationAccordion: React.FC<NavigationAccordionProps> = ({
                 aria-label={`Navigate to ${item} in ${title}`}
               >
                 {getMedicalIcon(title, item)}
-                <span className={styles.itemText}>{item}</span>
+                {sidePanelIsOpen &&  <span className={styles.itemText}>{item}</span> }
               </button>
             </li>
           ))}

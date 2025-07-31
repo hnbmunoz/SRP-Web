@@ -1,31 +1,15 @@
-import { useState, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Header from '../components/Header';
 import SidePanel from '../components/custom-component/SidePanel/SidePanel';
+import { SidePanelProvider, useSidePanelContext } from '../contexts/SidePanelContext';
 
-const PrivateRoutes = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  // Check if we're on mobile
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-      // On tablet/desktop, start with panel open
-      if (window.innerWidth > 768) {
-        setIsOpen(true);
-      }
-    };
-
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+const PrivateRoutesContent = () => {
+  const { isMobile } = useSidePanelContext();
  
   return (
     <div style={{ display: 'flex', height: '100vh' }}>
       {/* Side panel - always present on tablet/desktop */}
-      {!isMobile && <SidePanel isOpen={isOpen} setIsOpen={setIsOpen} />}
+      {!isMobile && <SidePanel />}
       
       <div style={{
         flex: 1,
@@ -33,7 +17,7 @@ const PrivateRoutes = () => {
         flexDirection: 'column',
         minWidth: 0 // Prevent flex item from overflowing
       }}>
-        <Header isOpen={isOpen} setIsOpen={setIsOpen} />
+        <Header />
         <div style={{ flex: 1, padding: '1.25rem', overflow: 'auto' }}>
           <Routes>
             <Route path="/" element={<h1>Dashboard</h1>} />
@@ -42,8 +26,16 @@ const PrivateRoutes = () => {
       </div>
 
       {/* Side panel overlay for mobile */}
-      {isMobile && <SidePanel isOpen={isOpen} setIsOpen={setIsOpen} />}
+      {isMobile && <SidePanel />}
     </div>
+  );
+};
+
+const PrivateRoutes = () => {
+  return (
+    <SidePanelProvider>
+      <PrivateRoutesContent />
+    </SidePanelProvider>
   );
 };
 

@@ -3,40 +3,28 @@ import styles from './Header.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 import { FaBars, FaUser, FaCog, FaSignOutAlt, FaStethoscope } from 'react-icons/fa';
-import type { Dispatch, SetStateAction } from 'react';
- 
-interface HeaderProps {
-  isOpen?: boolean;
-  setIsOpen?: Dispatch<SetStateAction<boolean>>;
-}
+import { useSidePanelContext } from '../contexts/SidePanelContext';
 
-const Header: React.FC<HeaderProps> = ({ isOpen, setIsOpen }) => {
+const Header: React.FC = () => {
   const navigate = useNavigate();
   const { clearToken } = useAuthStore();
+  const { toggleSidePanel } = useSidePanelContext();
 
   const handleLogout = () => {
     clearToken();
     navigate('/');
   };
 
-  const toggleSidePanel = () => {
-    if (setIsOpen) {
-      setIsOpen(!isOpen);
-    }
-  };
-
   return (
     <header className={styles.header}>
       <div className={styles.leftSection}>
-        {setIsOpen && (
-          <button
-            className={styles.burgerButton}
-            onClick={toggleSidePanel}
-            aria-label="Toggle navigation menu"
-          >
-            <FaBars />
-          </button>
-        )}
+        <button
+          className={styles.burgerButton}
+          onClick={toggleSidePanel}
+          aria-label="Toggle navigation menu"
+        >
+          <FaBars />
+        </button>
         <div className={styles.branding}>
           <div className={styles.logo}>
             <FaStethoscope className={styles.logoIcon} />
