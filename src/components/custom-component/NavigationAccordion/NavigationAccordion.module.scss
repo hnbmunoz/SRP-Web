@@ -1,47 +1,114 @@
-@import '/src/assets/styles/_themes.scss';
+@use '/src/assets/styles/_themes.scss' as themes;
 
 .navigation-accordion {
-  border-radius: 5px;
-  overflow: hidden;
+  margin-bottom: 0.5rem;
 
   .navigation-accordion-header {
-    padding: 10px;
-    background-color: $secondary;
-    color: $text-primary;
+    padding: 1rem;
+    background-color: themes.$secondary;
+    color: themes.$text-primary;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    border: none;
+    width: 100%;
+    text-align: left;
+    transition: background-color 0.2s ease, padding 0.3s ease;
+    border-radius: 0.25rem;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    &:focus {
+      outline: 0.125rem solid white;
+      outline-offset: 0.125rem;
+    }
 
     .accordion-title {
       display: block;
-      margin-left: 10px;
+      margin-left: 0.625rem;
+      font-weight: 500;
+      flex: 1;
+      transition: opacity 0.3s ease;
     }
 
     .arrow {
-      transition: transform 0.3s ease;
-      margin-left: auto;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.7);
 
       &.open {
         transform: rotate(180deg);
       }
     }
-  }
 
-  &.collapsed .navigation-accordion-header {
-    justify-content: center;
-    .accordion-title {
-      display: none;
+    // When side panel is collapsed on tablet/desktop
+    @media (min-width: 48.0625rem) {
+      :global(.side-panel.closed) & {
+        padding: 1rem 0.5rem;
+        justify-content: center;
+
+        .accordion-title {
+          display: none;
+        }
+
+        .arrow {
+          display: none;
+        }
+      }
     }
   }
 
   .navigation-accordion-content {
-    padding: 10px;
-    display: none;
-    background-color: $background;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.05);
 
     &.open {
+      max-height: 18.75rem; // Adjust based on content
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      margin: 0;
+    }
+
+    .nav-item {
       display: block;
+      width: 100%;
+      padding: 0.75rem 1rem 0.75rem 3rem;
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.9);
+      text-align: left;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      font-size: 0.9rem;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      &:focus {
+        outline: 0.125rem solid white;
+        outline-offset: -0.125rem;
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+    }
+
+    // Hide content when collapsed on tablet/desktop
+    @media (min-width: 48.0625rem) {
+      :global(.side-panel.closed) & {
+        max-height: 0 !important;
+      }
     }
   }
 }

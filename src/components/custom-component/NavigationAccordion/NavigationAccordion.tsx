@@ -18,16 +18,40 @@ const NavigationAccordion: React.FC<NavigationAccordionProps> = ({ data, isOpen 
   };
 
   return (
-    <div className={`${styles['navigation-accordion']} ${!isOpen ? styles.collapsed : ''}`}>
-      <div className={styles['navigation-accordion-header']} onClick={toggleAccordion}>
+    <div className={styles['navigation-accordion']}>
+      <div
+        className={styles['navigation-accordion-header']}
+        onClick={toggleAccordion}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleAccordion();
+          }
+        }}
+        aria-expanded={isAccordionOpen}
+        aria-controls={`accordion-content-${data.title}`}
+      >
         <FaHome />
-        <span className={styles['accordion-title']}>{data.title}</span>
-        <span className={`${styles.arrow} ${isAccordionOpen ? styles.open : ''}`}>&#9660;</span>
+        {isOpen && <span className={styles['accordion-title']}>{data.title}</span>}
+        <span className={`${styles.arrow} ${isAccordionOpen ? styles.open : ''}`}>
+          &#9660;
+        </span>
       </div>
-      <div className={`${styles['navigation-accordion-content']} ${isAccordionOpen ? styles.open : ''}`}>
+      <div
+        id={`accordion-content-${data.title}`}
+        className={`${styles['navigation-accordion-content']} ${isAccordionOpen ? styles.open : ''}`}
+        role="region"
+        aria-labelledby={`accordion-header-${data.title}`}
+      >
         <ul>
           {data.items.map((item, index) => (
-            <li key={index}>{item}</li>
+            <li key={index}>
+              <button className={styles['nav-item']} type="button">
+                {item}
+              </button>
+            </li>
           ))}
         </ul>
       </div>
