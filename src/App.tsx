@@ -11,7 +11,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route
-          path="/"
+          path="/*"
           element={token ? <PrivateRoutes /> : <PublicRoutes />}
         />
         {/* <Route path="*" element={<NotFound />} /> */}

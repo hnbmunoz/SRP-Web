@@ -3,6 +3,7 @@ import { useAuthStore } from '../store/authStore';
 import { useNavigate } from 'react-router-dom';
 import styles from './Login.module.scss';
 import LoadingOverlay from './custom-component/Loading';
+import LoadingDemo from './LoadingDemo';
 
 interface LoginProps {}
 
@@ -281,14 +282,6 @@ const Login: React.FC<LoginProps> = () => {
         </div>
       </div>
       {isLoading && <LoadingOverlay />}
-
-      {/* Loading Overlay */}
-      {/* <div className={`${styles.loadingOverlay} ${isLoading ? styles.show : ''}`}>
-        <div className={styles.loadingContent}>
-          <div className={styles.loadingIcon}></div>
-          <p className={styles.loadingText}>Authenticating...</p>
-        </div>
-      </div> */}
     </>
   );
 };

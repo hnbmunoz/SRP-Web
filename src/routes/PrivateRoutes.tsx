@@ -1,7 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
 import Header from '../components/Header';
 import SidePanel from '../components/custom-component/SidePanel/SidePanel';
+import NotFound from '../components/NotFound';
 import { SidePanelProvider, useSidePanelContext } from '../contexts/SidePanelContext';
+import Forbidden from '../components/Forbidden';
 
 const PrivateRoutesContent = () => {
   const { isMobile } = useSidePanelContext();
@@ -21,6 +23,7 @@ const PrivateRoutesContent = () => {
         <div style={{ flex: 1, padding: '1.25rem', overflow: 'auto' }}>
           <Routes>
             <Route path="/" element={<h1>Dashboard</h1>} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
       </div>

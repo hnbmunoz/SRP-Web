@@ -1,0 +1,290 @@
+@import '../assets/styles/_themes.scss';
+
+.forbiddenContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+  padding: 2rem;
+  text-align: center;
+  background: linear-gradient(135deg, $background 0%, rgba($alert-warning, 0.05) 100%);
+  border-radius: 12px;
+  margin: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.errorCode {
+  font-size: 8rem;
+  font-weight: 900;
+  color: $alert-warning;
+  margin: 0;
+  line-height: 1;
+  text-shadow: 0 4px 8px rgba($alert-warning, 0.2);
+  animation: pulse 2s infinite;
+  
+  @media (max-width: 768px) {
+    font-size: 6rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 4rem;
+  }
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: $text-primary;
+  margin: 1rem 0 0.5rem 0;
+  
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1.5rem;
+  }
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: $text-secondary;
+  margin: 0 0 2rem 0;
+  max-width: 500px;
+  line-height: 1.6;
+  
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1rem;
+  }
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 2rem;
+  
+  @media (max-width: 480px) {
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+.primaryButton {
+  background: linear-gradient(135deg, $alert-warning 0%, darken($alert-warning, 10%) 100%);
+  color: white;
+  border: none;
+  padding: 0.875rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 12px rgba($alert-warning, 0.3);
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba($alert-warning, 0.4);
+    background: linear-gradient(135deg, darken($alert-warning, 5%) 0%, darken($alert-warning, 15%) 100%);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.secondaryButton {
+  background: linear-gradient(135deg, $primary 0%, darken($primary, 10%) 100%);
+  color: white;
+  border: none;
+  padding: 0.875rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 12px rgba($primary, 0.3);
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba($primary, 0.4);
+    background: linear-gradient(135deg, darken($primary, 5%) 0%, darken($primary, 15%) 100%);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.tertiaryButton {
+  background: transparent;
+  color: $text-secondary;
+  border: 2px solid $text-secondary;
+  padding: 0.875rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  
+  &:hover {
+    background: $text-secondary;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba($text-secondary, 0.3);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.illustration {
+  margin-bottom: 2rem;
+  opacity: 0.8;
+  animation: shake 3s ease-in-out infinite;
+}
+
+.statusMessage {
+  margin: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: rgba($alert-warning, 0.05);
+  border: 1px solid rgba($alert-warning, 0.2);
+  border-radius: 8px;
+  max-width: 400px;
+}
+
+.statusIndicator {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: $alert-warning;
+  animation: statusPulse 1.5s ease-in-out infinite;
+  
+  &:nth-child(1) {
+    animation-delay: 0s;
+  }
+  
+  &:nth-child(2) {
+    animation-delay: 0.3s;
+  }
+  
+  &:nth-child(3) {
+    animation-delay: 0.6s;
+  }
+}
+
+.statusText {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: $text-primary;
+  text-align: center;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.helpText {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: rgba($accent, 0.1);
+  border-left: 4px solid $accent;
+  border-radius: 4px;
+  color: $text-primary;
+  font-size: 0.9rem;
+  max-width: 500px;
+}
+
+.infoBox {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: rgba($secondary, 0.05);
+  border: 1px solid rgba($secondary, 0.2);
+  border-radius: 8px;
+  max-width: 500px;
+  text-align: left;
+  
+  h3 {
+    color: $text-primary;
+    font-size: 1.1rem;
+    margin: 0 0 1rem 0;
+    font-weight: 600;
+  }
+  
+  ul {
+    margin: 0;
+    padding-left: 1.5rem;
+    color: $text-secondary;
+    
+    li {
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-2px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(2px);
+  }
+}
+
+@keyframes statusPulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
