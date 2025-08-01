@@ -15,7 +15,8 @@ const SidePanelToggleButton: React.FC<SidePanelToggleButtonProps> = ({ isOpen, t
       aria-label={isOpen ? 'Collapse navigation panel' : 'Expand navigation panel'}
       title={isOpen ? 'Collapse navigation panel' : 'Expand navigation panel'}
     >
-      {isOpen ? <FaArrowLeft /> : <FaArrowRight />}
+      
+      {isOpen ? <FaArrowLeft color="red"/> : <FaArrowRight color="red" />}
     </button>
   );
 };

@@ -21,15 +21,15 @@
 
 .side-panel {
   position: fixed;
-  top: 0;
+  top: 4rem; // Position below header (header height + padding)
   left: 0;
-  height: 100vh;
+  height: calc(100vh - 4rem); // Subtract header height from viewport height
   background: linear-gradient(180deg, #007bbf 0%, #005a8b 50%, #009688 100%);
   z-index: 1000;
   transition: width 0.3s ease, transform 0.3s ease;
   display: flex;
   flex-direction: column;
-  box-shadow: 
+  box-shadow:
     0.25rem 0 1.5rem rgba(0, 123, 191, 0.3),
     0.125rem 0 0.5rem rgba(0, 0, 0, 0.1);
   border-right: 0.0625rem solid rgba(255, 255, 255, 0.1);
