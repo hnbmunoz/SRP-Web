@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuthStore } from '../store/authStore';
 import { useNavigate } from 'react-router-dom';
 import styles from './Login.module.scss';
+import LoadingOverlay from './custom-component/Loading';
 
 interface LoginProps {}
 
@@ -100,7 +101,7 @@ const Login: React.FC<LoginProps> = () => {
     
     // Simulate API call
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise(resolve => setTimeout(resolve, 5000));
       
       // Store remember me preference
       if (rememberMe) {
@@ -279,14 +280,15 @@ const Login: React.FC<LoginProps> = () => {
           </div>
         </div>
       </div>
+      {isLoading && <LoadingOverlay />}
 
       {/* Loading Overlay */}
-      <div className={`${styles.loadingOverlay} ${isLoading ? styles.show : ''}`}>
+      {/* <div className={`${styles.loadingOverlay} ${isLoading ? styles.show : ''}`}>
         <div className={styles.loadingContent}>
           <div className={styles.loadingIcon}></div>
           <p className={styles.loadingText}>Authenticating...</p>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

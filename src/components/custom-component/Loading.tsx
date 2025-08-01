@@ -1,29 +1,25 @@
-import styled from 'styled-components';
+import React from 'react';
+import styles from './LoadingOverlay.module.scss';
 
-const LoadingOverlay = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-`;
+interface LoadingOverlayProps {
+  message?: string;
+  isVisible?: boolean;
+}
 
-const LoadingText = styled.h1`
-  color: white;
-  font-size: 2em;
-`;
+const LoadingOverlay: React.FC<LoadingOverlayProps> = ({ 
+  message = "Loading...", 
+  isVisible = true 
+}) => {
+  if (!isVisible) return null;
 
-const Loading = () => {
   return (
-    <LoadingOverlay>
-      <LoadingText>Loading...</LoadingText>
-    </LoadingOverlay>
+    <div className={styles.loadingOverlay}>
+      {/* <div className={styles.loadingContent}> */}
+        <div className={styles.loadingIcon}></div>
+        <h2 className={styles.loadingText}>{message}</h2>
+      {/* </div> */}
+    </div>
   );
 };
 
-export default Loading;
+export default LoadingOverlay;
