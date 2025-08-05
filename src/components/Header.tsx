@@ -69,10 +69,13 @@ const Header: React.FC = () => {
             <FaCog className={styles.settingsIcon} />
           </button>
           <div className={`${styles.dropdownContent} ${isDropdownOpen ? styles.dropdownOpen : ''}`}>
-            <a href="#" className={styles.dropdownItem}>
+            <button
+              onClick={() => navigate('/profile')}
+              className={styles.dropdownItem}
+            >
               <FaUser className={styles.dropdownIcon} />
               Profile Settings
-            </a>
+            </button>
             <a href="#" className={styles.dropdownItem}>
               <FaCog className={styles.dropdownIcon} />
               System Settings

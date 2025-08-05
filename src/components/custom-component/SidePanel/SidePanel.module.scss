@@ -21,7 +21,8 @@
 
 .side-panel {
   position: fixed;
-  top: 4rem; // Position below header (header height + padding)
+  top: 4rem;
+  padding-top: 1rem;
   left: 0;
   height: calc(100vh - 4rem); // Subtract header height from viewport height
   background: linear-gradient(180deg, #007bbf 0%, #005a8b 50%, #009688 100%);
@@ -236,6 +237,59 @@
   }
 }
 
+// Dashboard Button Styles
+.dashboardButton {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 1rem 1.25rem;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  @media (min-width: 48.0625rem) {
+    .side-panel.closed & {
+      padding: 1rem 0.75rem;
+      justify-content: center;
+      
+      .dashboardText {
+        display: none;
+      }
+    }
+  }
+}
+
+.dashboardIcon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.dashboardText {
+  font-size: 1rem;
+  font-weight: 600;
+  transition: opacity 0.3s ease;
+}
+
 // Medical-themed navigation sections
 .navigationSection {
   margin-bottom: 1.5rem;
@@ -285,6 +339,7 @@
   align-items: center;
   gap: 0.875rem;
   padding: 0.875rem 1.25rem;
+  // margin-bottom: 0.5rem;
   color: rgba(255, 255, 255, 0.9);
   text-decoration: none;
   transition: all 0.3s ease;

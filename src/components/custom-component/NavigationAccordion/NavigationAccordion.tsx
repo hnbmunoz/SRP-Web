@@ -52,7 +52,7 @@ const NavigationAccordion: React.FC<NavigationAccordionProps> = ({
         aria-expanded={isOpen}
         aria-controls={`accordion-content-${title.replace(/\s+/g, '-').toLowerCase()}`}
       >
-        {getMedicalIcon(title, undefined, styles.medicalIcon)}
+        {getMedicalIcon(title, undefined, `${styles.medicalIcon} icon-hover`, 'medium')}
         {sidePanelIsOpen && <span className={styles.accordionTitle}>{title}</span>}
         <FaChevronDown
           className={`${styles.arrow} ${isOpen ? styles.open : ''}`}
@@ -80,7 +80,7 @@ const NavigationAccordion: React.FC<NavigationAccordionProps> = ({
                 }}
                 aria-label={`Navigate to ${item} in ${title}`}
               >
-                {getMedicalIcon(title, item, styles.medicalIcon)}
+                {getMedicalIcon(title, item, `${styles.medicalIcon} icon-hover`, 'small')}
                 {sidePanelIsOpen &&  <span className={styles.itemText}>{item}</span> }
               </button>
             </li>

@@ -32,7 +32,9 @@ const Login: React.FC<LoginProps> = () => {
       case 'username':
         if (!value.trim()) return 'Username is required';
         if (value.length < 3) return 'Username must be at least 3 characters';
-        if (!/^[a-zA-Z0-9._-]+$/.test(value)) return 'Username contains invalid characters';
+        if (!/^(?=[^@]*@[^@]*$)[a-zA-Z0-9._@-]+$/.test(value)) 
+          return 'Username contains invalid characters';
+        
         return undefined;
       case 'password':
         if (!value) return 'Password is required';

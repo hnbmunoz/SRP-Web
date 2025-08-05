@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { usePageStore } from '../../../store/pageStore';
 import NavigationAccordion from '../NavigationAccordion/NavigationAccordion';
 import styles from './SidePanel.module.scss';
-import { FaTimes, FaStethoscope } from 'react-icons/fa';
+import { FaTimes, FaStethoscope, FaHome } from 'react-icons/fa';
 import SidePanelToggleButton from './SidePanelToggleButton';
 import { useSidePanelContext } from '../../../contexts/SidePanelContext';
 
@@ -41,6 +42,8 @@ const SidePanel: React.FC = () => {
     });
   };
 
+  const navigate = useNavigate();
+
   // Function to handle navigation
   const handleNavigation = (item: string, module: string) => {
     // Create a URL-friendly path
@@ -49,11 +52,12 @@ const SidePanel: React.FC = () => {
     const fullPath = `/${modulePath}/${itemPath}`;
     
     console.log(`Navigating to: ${fullPath}`);
-    // TODO: Implement actual routing with react-router-dom
-    // navigate(fullPath);
+    navigate(fullPath);
     
-    // For now, show user feedback
-    alert(`Navigation: ${item} in ${module}\nPath: ${fullPath}`);
+    // Close side panel on mobile after navigation
+    if (window.innerWidth <= 768) {
+      setIsOpen(false);
+    }
   };
 
   const closeSidePanel = () => {
@@ -134,6 +138,14 @@ const SidePanel: React.FC = () => {
     }
   ];
 
+  // Handle dashboard navigation
+  const handleDashboardNavigation = () => {
+    navigate('/');
+    if (window.innerWidth <= 768) {
+      setIsOpen(false);
+    }
+  };
+
   return (
     <>
       {/* Overlay - Mobile only */}
@@ -158,6 +170,18 @@ const SidePanel: React.FC = () => {
 
         
         <div className={styles.content}>
+          {/* Dashboard Link */}
+          <div className={styles.navigationSection}>
+            <button
+              className={styles.dashboardButton}
+              onClick={handleDashboardNavigation}
+              aria-label="Go to Dashboard"
+            >
+              <FaHome className={`${styles.dashboardIcon} icon-hover`} />
+              {isOpen && <span className={styles.dashboardText}>Dashboard</span>}
+            </button>
+          </div>
+
           <div className={styles.navigationSection}>
             <h3 className={styles.sectionTitle}>Core Modules</h3>
             <NavigationAccordion
@@ -192,25 +216,6 @@ const SidePanel: React.FC = () => {
               onToggle={toggleAccordion}
               onNavigate={handleNavigation}
             />
-          </div>
-
-          {/* Quick Access Medical Tools */}
-          <div className={styles.navigationSection}>
-            <h3 className={styles.sectionTitle}>Quick Access</h3>
-            <div className={styles.quickAccessGrid}>
-              <button className={styles.quickAccessItem} aria-label="Emergency Alert">
-                🚨 Emergency
-              </button>
-              <button className={styles.quickAccessItem} aria-label="Patient Search">
-                🔍 Find Patient
-              </button>
-              <button className={styles.quickAccessItem} aria-label="New Prescription">
-                💊 New Rx
-              </button>
-              <button className={styles.quickAccessItem} aria-label="Lab Orders">
-                🧪 Lab Orders
-              </button>
-            </div>
           </div>
         </div>
       </div>

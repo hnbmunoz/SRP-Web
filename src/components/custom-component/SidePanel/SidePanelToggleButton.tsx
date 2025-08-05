@@ -16,7 +16,7 @@ const SidePanelToggleButton: React.FC<SidePanelToggleButtonProps> = ({ isOpen, t
       title={isOpen ? 'Collapse navigation panel' : 'Expand navigation panel'}
     >
       
-      {isOpen ? <FaArrowLeft color="red"/> : <FaArrowRight color="red" />}
+      {isOpen ? <FaArrowLeft className="icon-hover" /> : <FaArrowRight className="icon-hover" />}
     </button>
   );
 };
