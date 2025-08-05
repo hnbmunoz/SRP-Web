@@ -26,6 +26,7 @@ const PrivateRoutesContent = () => {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/access-landing" element={<Forbidden />} />
             
             {/* Patient Management Routes */}
             <Route path="/patient-management" element={<div style={{padding: '2rem'}}><h1>Patient Management</h1><p>Patient management module coming soon...</p></div>} />
