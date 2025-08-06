@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { usePageStore } from '../../../store/pageStore';
 import NavigationAccordion from '../NavigationAccordion/NavigationAccordion';
 import styles from './SidePanel.module.scss';
-import { FaTimes, FaStethoscope, FaHome } from 'react-icons/fa';
+import { FaHome } from 'react-icons/fa';
 import SidePanelToggleButton from './SidePanelToggleButton';
 import { useSidePanelContext } from '../../../contexts/SidePanelContext';
+import Tooltip from '../Tooltip/Tooltip';
 
 const SidePanel: React.FC = () => {
   const { isOpen, setIsOpen, toggleSidePanel } = useSidePanelContext();
@@ -172,14 +173,21 @@ const SidePanel: React.FC = () => {
         <div className={styles.content}>
           {/* Dashboard Link */}
           <div className={styles.navigationSection}>
-            <button
-              className={styles.dashboardButton}
-              onClick={handleDashboardNavigation}
-              aria-label="Go to Dashboard"
+            <Tooltip
+              content="Dashboard"
+              position="right"
+              disabled={isOpen}
+              delay={300}
             >
-              <FaHome className={`${styles.dashboardIcon} icon-hover`} />
-              {isOpen && <span className={styles.dashboardText}>Dashboard</span>}
-            </button>
+              <button
+                className={styles.dashboardButton}
+                onClick={handleDashboardNavigation}
+                aria-label="Go to Dashboard"
+              >
+                <FaHome className={`${styles.dashboardIcon} icon-hover`} />
+                {isOpen && <span className={styles.dashboardText}>Dashboard</span>}
+              </button>
+            </Tooltip>
           </div>
 
           <div className={styles.navigationSection}>

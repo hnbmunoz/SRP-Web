@@ -1,14 +1,16 @@
 .dashboard {
-  padding: 2rem;
+  padding: 0;
   max-width: 1400px;
   margin: 0 auto;
   background: var(--background-color);
-  min-height: 100vh;
+  min-height: calc(100vh - 4rem); // Account for header height
+  width: 100%;
 }
 
 .dashboardHeader {
   margin-bottom: 2rem;
   text-align: center;
+  padding: 2rem 2rem 0 2rem;
 }
 
 .dashboardTitle {
@@ -36,6 +38,7 @@
 /* Quick Stats Section */
 .quickStats {
   margin-bottom: 3rem;
+  padding: 0 2rem;
 }
 
 .statsGrid {
@@ -89,6 +92,7 @@
 .mainModules,
 .specializedCare {
   margin-bottom: 3rem;
+  padding: 0 2rem;
 }
 
 .modulesGrid {
@@ -202,6 +206,7 @@
 /* Recent Activity Section */
 .recentActivity {
   margin-bottom: 2rem;
+  padding: 0 2rem 2rem 2rem;
 }
 
 .activityList {
@@ -257,8 +262,18 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .dashboard {
-    padding: 1rem;
+  .dashboardHeader {
+    padding: 1rem 1rem 0 1rem;
+  }
+
+  .quickStats,
+  .mainModules,
+  .specializedCare {
+    padding: 0 1rem;
+  }
+
+  .recentActivity {
+    padding: 0 1rem 1rem 1rem;
   }
 
   .dashboardTitle {
@@ -288,8 +303,18 @@
 }
 
 @media (max-width: 480px) {
-  .dashboard {
-    padding: 0.5rem;
+  .dashboardHeader {
+    padding: 0.5rem 0.5rem 0 0.5rem;
+  }
+
+  .quickStats,
+  .mainModules,
+  .specializedCare {
+    padding: 0 0.5rem;
+  }
+
+  .recentActivity {
+    padding: 0 0.5rem 0.5rem 0.5rem;
   }
 
   .dashboardTitle {

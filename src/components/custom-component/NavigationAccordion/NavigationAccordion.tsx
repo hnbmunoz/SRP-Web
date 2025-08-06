@@ -3,6 +3,7 @@ import styles from './NavigationAccordion.module.scss';
 import { FaChevronDown } from 'react-icons/fa';
 import { useSidePanelContext } from '../../../contexts/SidePanelContext';
 import { getMedicalIcon } from '../../custom-templates/MedicalIconMapper';
+import Tooltip from '../Tooltip/Tooltip';
 
 interface NavigationAccordionProps {
   title: string;
@@ -46,19 +47,26 @@ const NavigationAccordion: React.FC<NavigationAccordionProps> = ({
 
   return (
     <div className={styles.navigationAccordion}>
-      <button
-        className={styles.navigationAccordionHeader}
-        onClick={toggleAccordion}
-        aria-expanded={isOpen}
-        aria-controls={`accordion-content-${title.replace(/\s+/g, '-').toLowerCase()}`}
+      <Tooltip
+        content={title}
+        position="right"
+        disabled={sidePanelIsOpen}
+        delay={300}
       >
-        {getMedicalIcon(title, undefined, `${styles.medicalIcon} icon-hover`, 'medium')}
-        {sidePanelIsOpen && <span className={styles.accordionTitle}>{title}</span>}
-        <FaChevronDown
-          className={`${styles.arrow} ${isOpen ? styles.open : ''}`}
-          aria-hidden="true"
-        />
-      </button>
+        <button
+          className={styles.navigationAccordionHeader}
+          onClick={toggleAccordion}
+          aria-expanded={isOpen}
+          aria-controls={`accordion-content-${title.replace(/\s+/g, '-').toLowerCase()}`}
+        >
+          {getMedicalIcon(title, undefined, `${styles.medicalIcon} icon-hover`, 'medium')}
+          {sidePanelIsOpen && <span className={styles.accordionTitle}>{title}</span>}
+          <FaChevronDown
+            className={`${styles.arrow} ${isOpen ? styles.open : ''}`}
+            aria-hidden="true"
+          />
+        </button>
+      </Tooltip>
       
       <div 
         id={`accordion-content-${title.replace(/\s+/g, '-').toLowerCase()}`}
@@ -69,20 +77,27 @@ const NavigationAccordion: React.FC<NavigationAccordionProps> = ({
         <ul role="list">
           {medicalItems.map((item, index) => (
             <li key={index} role="listitem">
-              <button
-                className={styles.navItem}
-                onClick={() => {
-                  if (onNavigate) {
-                    onNavigate(item, title);
-                  } else {
-                    console.log(`Navigate to: ${item} in ${title}`);
-                  }
-                }}
-                aria-label={`Navigate to ${item} in ${title}`}
+              <Tooltip
+                content={item}
+                position="right"
+                disabled={sidePanelIsOpen}
+                delay={300}
               >
-                {getMedicalIcon(title, item, `${styles.medicalIcon} icon-hover`, 'small')}
-                {sidePanelIsOpen &&  <span className={styles.itemText}>{item}</span> }
-              </button>
+                <button
+                  className={styles.navItem}
+                  onClick={() => {
+                    if (onNavigate) {
+                      onNavigate(item, title);
+                    } else {
+                      console.log(`Navigate to: ${item} in ${title}`);
+                    }
+                  }}
+                  aria-label={`Navigate to ${item} in ${title}`}
+                >
+                  {getMedicalIcon(title, item, `${styles.medicalIcon} icon-hover`, 'small')}
+                  {sidePanelIsOpen &&  <span className={styles.itemText}>{item}</span> }
+                </button>
+              </Tooltip>
             </li>
           ))}
         </ul>

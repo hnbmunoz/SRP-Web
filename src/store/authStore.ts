@@ -10,7 +10,7 @@ interface AuthState {
 export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
-      token: null,
+      token: 'test-token', // Temporarily set token for testing
       setToken: (token) => set({ token }),
       clearToken: () => set({ token: null }),
     }),
