@@ -77,7 +77,7 @@ const Header: React.FC = () => {
               Profile Settings
             </button>
             <button
-              onClick={() => navigate('/access-landing')}
+              onClick={() => navigate('/landing-page')}
               className={styles.dropdownItem}
             >
               <FaCog className={styles.dropdownIcon} />

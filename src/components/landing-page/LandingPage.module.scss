@@ -1,0 +1,280 @@
+@import '../../assets/styles/themes';
+
+.landingPage {
+  min-height: 100vh;
+  background: $background;
+  overflow-x: hidden;
+  
+  // Global styles for the landing page
+  * {
+    box-sizing: border-box;
+  }
+  
+  // Smooth scrolling for anchor links
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  // Remove default margins and paddings
+  h1, h2, h3, h4, h5, h6, p, ul, ol {
+    margin: 0;
+    padding: 0;
+  }
+  
+  // List styles
+  ul, ol {
+    list-style: none;
+  }
+  
+  // Button reset
+  button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+  }
+  
+  // Link styles
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  // Input styles
+  input, textarea, select {
+    font: inherit;
+    outline: none;
+  }
+  
+  // Image styles
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  // Accessibility improvements
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  
+  // Focus styles for better accessibility
+  *:focus-visible {
+    outline: 2px solid $primary;
+    outline-offset: 2px;
+  }
+  
+  // Reduced motion preferences
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+  
+  // High contrast mode support
+  @media (prefers-contrast: high) {
+    * {
+      border-color: currentColor !important;
+    }
+  }
+  
+  // Dark mode support (if needed in the future)
+  @media (prefers-color-scheme: dark) {
+    // Dark mode styles can be added here if needed
+  }
+  
+  // Print styles
+  @media print {
+    * {
+      background: transparent !important;
+      color: black !important;
+      box-shadow: none !important;
+      text-shadow: none !important;
+    }
+    
+    a,
+    a:visited {
+      text-decoration: underline;
+    }
+    
+    a[href]:after {
+      content: " (" attr(href) ")";
+    }
+    
+    abbr[title]:after {
+      content: " (" attr(title) ")";
+    }
+    
+    .no-print {
+      display: none !important;
+    }
+  }
+}
+
+// Animation classes for scroll-triggered animations
+.fadeInUp {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+  
+  &.animate {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fadeInLeft {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: all 0.6s ease;
+  
+  &.animate {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.fadeInRight {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: all 0.6s ease;
+  
+  &.animate {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.scaleIn {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.6s ease;
+  
+  &.animate {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// Utility classes
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  
+  @media (max-width: 768px) {
+    padding: 0 1rem;
+  }
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 2rem; }
+.mb-5 { margin-bottom: 3rem; }
+
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }
+.mt-5 { margin-top: 3rem; }
+
+.p-1 { padding: 0.5rem; }
+.p-2 { padding: 1rem; }
+.p-3 { padding: 1.5rem; }
+.p-4 { padding: 2rem; }
+.p-5 { padding: 3rem; }
+
+// Responsive utilities
+.hide-mobile {
+  @media (max-width: 768px) {
+    display: none !important;
+  }
+}
+
+.hide-desktop {
+  @media (min-width: 769px) {
+    display: none !important;
+  }
+}
+
+.show-mobile {
+  display: none !important;
+  
+  @media (max-width: 768px) {
+    display: block !important;
+  }
+}
+
+.show-desktop {
+  display: none !important;
+  
+  @media (min-width: 769px) {
+    display: block !important;
+  }
+}
+
+// Loading states
+.loading {
+  position: relative;
+  pointer-events: none;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid rgba($primary, 0.3);
+    border-top: 2px solid $primary;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Error states
+.error {
+  color: $alert-warning;
+  border-color: $alert-warning;
+}
+
+// Success states
+.success {
+  color: $accent;
+  border-color: $accent;
+}
