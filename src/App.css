@@ -1,7 +1,10 @@
 body {
   background-color: #F7F9FA; /* Neutral Color */
   color: #37474f;
-  font-family: sans-serif;
+  font-family: var(--font-primary);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
 }
 
 #root {
