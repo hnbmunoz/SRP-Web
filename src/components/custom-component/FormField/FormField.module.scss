@@ -1,4 +1,4 @@
-@import '../../../assets/styles/themes';
+@use '../../../assets/styles/themes' as *;
 
 .formGroup {
   display: flex;

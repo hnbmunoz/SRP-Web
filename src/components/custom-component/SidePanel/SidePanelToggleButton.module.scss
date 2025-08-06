@@ -1,4 +1,4 @@
-@use '../../../assets/styles/_themes.scss' as themes;
+@use '../../../assets/styles/themes' as *;
 
 .toggle-button {
   position: fixed;
@@ -6,7 +6,7 @@
   left: 5rem;
   width: 3.5rem;
   height: 3.5rem;
-  background: linear-gradient(135deg, themes.$secondary 0%, themes.$accent 100%);
+  background: linear-gradient(135deg, $secondary 0%, $accent 100%);
   border: 0.1875rem solid rgba(255, 255, 255, 0.4);
   border-radius: 50%;
   color: #ffffff;
@@ -33,7 +33,7 @@
   }
 
   &:hover {
-    background: linear-gradient(135deg, themes.$accent 0%, themes.$secondary 100%);
+    background: linear-gradient(135deg, $accent 0%, $secondary 100%);
     border-color: rgba(255, 255, 255, 0.5);
     transform: translateY(-50%) translateX(0.5rem) scale(1.15);
     box-shadow:

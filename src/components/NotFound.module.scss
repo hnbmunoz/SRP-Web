@@ -1,4 +1,5 @@
-@import '../assets/styles/_themes.scss';
+@use '../assets/styles/themes' as *;
+@use 'sass:color';
 
 .notFoundContainer {
   display: flex;
@@ -78,7 +79,7 @@
 }
 
 .primaryButton {
-  background: linear-gradient(135deg, $primary 0%, darken($primary, 10%) 100%);
+  background: linear-gradient(135deg, $primary 0%, color.adjust($primary, $lightness: -10%) 100%);
   color: white;
   border: none;
   padding: 0.875rem 2rem;
@@ -96,7 +97,7 @@
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba($primary, 0.4);
-    background: linear-gradient(135deg, darken($primary, 5%) 0%, darken($primary, 15%) 100%);
+    background: linear-gradient(135deg, color.adjust($primary, $lightness: -5%) 0%, color.adjust($primary, $lightness: -15%) 100%);
   }
   
   &:active {
@@ -150,7 +151,7 @@
 .searchInput {
   width: 100%;
   padding: 0.875rem 1rem;
-  border: 2px solid lighten($text-secondary, 30%);
+  border: 2px solid color.adjust($text-secondary, $lightness: 30%);
   border-radius: 8px;
   font-size: 1rem;
   transition: all 0.3s ease;
@@ -179,7 +180,7 @@
   transition: all 0.3s ease;
   
   &:hover {
-    background: darken($secondary, 10%);
+    background: color.adjust($secondary, $lightness: -10%);
     transform: translateY(-1px);
   }
   

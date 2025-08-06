@@ -1,4 +1,5 @@
-@import '../assets/styles/_themes.scss';
+@use '../assets/styles/themes' as *;
+@use 'sass:color';
 
 .forbiddenContainer {
   display: flex;
@@ -78,7 +79,7 @@
 }
 
 .primaryButton {
-  background: linear-gradient(135deg, $alert-warning 0%, darken($alert-warning, 10%) 100%);
+  background: linear-gradient(135deg, $alert-warning 0%, color.adjust($alert-warning, $lightness: -10%) 100%);
   color: white;
   border: none;
   padding: 0.875rem 2rem;
@@ -96,7 +97,7 @@
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba($alert-warning, 0.4);
-    background: linear-gradient(135deg, darken($alert-warning, 5%) 0%, darken($alert-warning, 15%) 100%);
+    background: linear-gradient(135deg, color.adjust($alert-warning, $lightness: -5%) 0%, color.adjust($alert-warning, $lightness: -15%) 100%);
   }
   
   &:active {
@@ -105,7 +106,7 @@
 }
 
 .secondaryButton {
-  background: linear-gradient(135deg, $primary 0%, darken($primary, 10%) 100%);
+  background: linear-gradient(135deg, $primary 0%, color.adjust($primary, $lightness: -10%) 100%);
   color: white;
   border: none;
   padding: 0.875rem 2rem;
@@ -123,7 +124,7 @@
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba($primary, 0.4);
-    background: linear-gradient(135deg, darken($primary, 5%) 0%, darken($primary, 15%) 100%);
+    background: linear-gradient(135deg, color.adjust($primary, $lightness: -5%) 0%, color.adjust($primary, $lightness: -15%) 100%);
   }
   
   &:active {
