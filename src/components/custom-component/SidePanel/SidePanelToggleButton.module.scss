@@ -24,12 +24,18 @@
   transform: translateY(-50%) translateX(0.5rem);
   backdrop-filter: blur(0.625rem);
 
-  // Icon styling for maximum visibility
+  // Icon styling for maximum visibility and contrast
   svg {
-    color: #ffffff !important;
-    filter: drop-shadow(0 0.125rem 0.25rem rgba(0, 0, 0, 0.5));
+    color: #000000 !important;
+    filter: drop-shadow(0 0.125rem 0.25rem rgba(255, 255, 255, 0.8));
     transition: transform 0.3s ease;
     font-weight: bold;
+    font-size: 1.4rem;
+    width: 1.4rem;
+    height: 1.4rem;
+    display: block;
+    stroke: #ffffff;
+    stroke-width: 0.5px;
   }
 
   &:hover {
