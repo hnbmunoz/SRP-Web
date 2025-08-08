@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../store/authStore';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import styles from './Login.module.scss';
 import LoadingOverlay from './custom-component/Loading';
 import LoadingDemo from './LoadingDemo';
@@ -295,16 +295,12 @@ const Login: React.FC<LoginProps> = () => {
           <div className={styles.footer}>
             <p className={styles.footerText}>
               Don't have an account?{' '}
-              <a 
-                href="#signup" 
+              <Link
+                to="/signup"
                 className={styles.signupLink}
-                onClick={(e) => {
-                  e.preventDefault();
-                  alert('Registration functionality would be implemented here');
-                }}
               >
                 Sign up here
-              </a>
+              </Link>
             </p>
           </div>
         </div>
