@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useAuthStore } from '../store/authStore';
+import { useAuth } from '../store/authStore';
 import { useNavigate } from 'react-router-dom';
 import styles from './Login.module.scss';
 import LoadingOverlay from './custom-component/Loading';
@@ -15,7 +15,6 @@ interface FormErrors {
 const Login: React.FC<LoginProps> = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
@@ -23,25 +22,27 @@ const Login: React.FC<LoginProps> = () => {
     username: false,
     password: false
   });
-  const { setToken } = useAuthStore();
+  const { login, isLoading, error, clearError, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
-  // Form validation
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/');
+    }
+  }, [isAuthenticated, navigate]);
+
+  // Form validation - simplified for demo credentials
   const validateField = (field: string, value: string): string | undefined => {
     switch (field) {
       case 'username':
-        if (!value.trim()) return 'Username is required';
-        if (value.length < 3) return 'Username must be at least 3 characters';
-        if (!/^(?=[^@]*@[^@]*$)[a-zA-Z0-9._@-]+$/.test(value)) 
-          return 'Username contains invalid characters';
-        
+        if (!value.trim()) return 'Email is required';
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))
+          return 'Please enter a valid email address';
         return undefined;
       case 'password':
         if (!value) return 'Password is required';
         if (value.length < 6) return 'Password must be at least 6 characters';
-        if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(value)) {
-          return 'Password must contain uppercase, lowercase, and number';
-        }
         return undefined;
       default:
         return undefined;
@@ -93,9 +94,43 @@ const Login: React.FC<LoginProps> = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Temporary bypass for testing tooltips - just set token and navigate
-    setToken('medical_app_token');
-    navigate('/');
+    // Clear any previous errors
+    clearError();
+    
+    // Validate form before submission
+    const usernameError = validateField('username', username);
+    const passwordError = validateField('password', password);
+    
+    if (usernameError || passwordError) {
+      setErrors({
+        username: usernameError,
+        password: passwordError
+      });
+      setTouched({ username: true, password: true });
+      return;
+    }
+
+    try {
+      // Use the Zustand auth store login method
+      await login({
+        email: username, // Using username field as email
+        password: password
+      });
+
+      // Handle remember me functionality
+      if (rememberMe) {
+        localStorage.setItem('rememberMe', 'true');
+        localStorage.setItem('username', username);
+      } else {
+        localStorage.removeItem('rememberMe');
+        localStorage.removeItem('username');
+      }
+
+      // Navigation will be handled by the useEffect above when isAuthenticated becomes true
+    } catch (error) {
+      // Error is handled by the auth store and displayed via the error state
+      console.error('Login failed:', error);
+    }
   };
 
   const togglePasswordVisibility = () => {
@@ -134,7 +169,7 @@ const Login: React.FC<LoginProps> = () => {
           <form className={styles.form} onSubmit={handleLogin} noValidate>
             <div className={styles.inputGroup}>
               <label htmlFor="username" className={styles.label}>
-                Username or Email
+                Email Address
               </label>
               <div className={styles.inputWrapper}>
                 <input
@@ -145,7 +180,7 @@ const Login: React.FC<LoginProps> = () => {
                   onBlur={() => handleInputBlur('username')}
                   onFocus={() => handleInputFocus('username')}
                   className={getInputClassName('username')}
-                  placeholder="Enter your username"
+                  placeholder="Enter your email address"
                   autoComplete="username"
                   aria-describedby={errors.username ? 'username-error' : undefined}
                   aria-invalid={!!errors.username}
@@ -226,6 +261,22 @@ const Login: React.FC<LoginProps> = () => {
               </a>
             </div>
 
+            {/* Display authentication error */}
+            {error && (
+              <div className={styles.authError} role="alert">
+                <span className={styles.errorIcon}>⚠️</span>
+                {error}
+                <button
+                  type="button"
+                  className={styles.errorClose}
+                  onClick={clearError}
+                  aria-label="Dismiss error"
+                >
+                  ×
+                </button>
+              </div>
+            )}
+
             <button
               type="submit"
               className={styles.loginButton}
@@ -238,6 +289,7 @@ const Login: React.FC<LoginProps> = () => {
             <div id="login-button-desc" className="sr-only">
               {isLoading ? 'Please wait while we sign you in' : 'Click to sign in to your account'}
             </div>
+
           </form>
 
           <div className={styles.footer}>

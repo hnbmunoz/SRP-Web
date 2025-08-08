@@ -1,19 +1,19 @@
 import React, { useState, useRef } from 'react';
 import styles from './Header.module.scss';
 import { useNavigate } from 'react-router-dom';
-import { useAuthStore } from '../store/authStore';
+import { useAuth } from '../store/authStore';
 import { FaBars, FaUser, FaCog, FaSignOutAlt, FaStethoscope } from 'react-icons/fa';
 import { useSidePanelContext } from '../contexts/SidePanelContext';
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
-  const { clearToken } = useAuthStore();
+  const { user, logout } = useAuth();
   const { toggleSidePanel } = useSidePanelContext();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const timeoutRef = useRef<number | null>(null);
 
   const handleLogout = () => {
-    clearToken();
+    logout();
     navigate('/');
   };
 
@@ -54,9 +54,19 @@ const Header: React.FC = () => {
       
       <div className={styles.rightSection}>
         <div className={styles.userInfo}>
-          <span className={styles.welcomeText}>Welcome, Dr. Smith</span>
+          <span className={styles.welcomeText}>
+            Welcome, {user?.name || 'User'}
+          </span>
           <div className={styles.userAvatar}>
-            <FaUser />
+            {user?.avatar ? (
+              <img
+                src={user.avatar}
+                alt={user.name}
+                className={styles.avatarImage}
+              />
+            ) : (
+              <FaUser />
+            )}
           </div>
         </div>
         

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './Profile.module.scss';
 import ProfileSection from './custom-component/ProfileSection/ProfileSection';
 import FormField from './custom-component/FormField/FormField';
+import { useAuth } from '../store/authStore';
 import {
   FaUser,
   FaEnvelope,
@@ -31,36 +32,92 @@ interface UserProfile {
   avatar?: string;
 }
 
+// Helper function to convert auth user to profile format
+const convertAuthUserToProfile = (authUser: any): UserProfile => {
+  const nameParts = authUser.name.split(' ');
+  const firstName = nameParts[0] || '';
+  const lastName = nameParts.slice(1).join(' ') || '';
+  
+  // Generate profile data based on user role
+  const roleBasedData = {
+    admin: {
+      specialization: 'Healthcare Administration',
+      licenseNumber: 'ADM123456789',
+      phone: '+1 (555) 100-0001',
+      address: '100 Admin Plaza',
+      city: 'Medical Center',
+      state: 'CA',
+      zipCode: '90001'
+    },
+    user: {
+      specialization: 'General Practice',
+      licenseNumber: 'GP987654321',
+      phone: '+1 (555) 200-0002',
+      address: '200 Practice Lane',
+      city: 'Healthcare City',
+      state: 'NY',
+      zipCode: '10001'
+    },
+    moderator: {
+      specialization: 'Medical Supervision',
+      licenseNumber: 'MOD456789123',
+      phone: '+1 (555) 300-0003',
+      address: '300 Supervisor Street',
+      city: 'Oversight Town',
+      state: 'TX',
+      zipCode: '75001'
+    }
+  };
+
+  const roleData = roleBasedData[authUser.role as keyof typeof roleBasedData] || roleBasedData.user;
+
+  return {
+    id: authUser.id,
+    firstName,
+    lastName,
+    email: authUser.email,
+    joinDate: authUser.createdAt,
+    avatar: authUser.avatar,
+    dateOfBirth: '1985-03-15', // Default date
+    ...roleData
+  };
+};
 
 const Profile: React.FC = () => {
+  const { user, updateUser } = useAuth();
   const [editingSection, setEditingSection] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [profile, setProfile] = useState<UserProfile>({
-    id: '1',
-    firstName: 'Dr. John',
-    lastName: 'Smith',
-    email: 'john.smith@medportal.com',
-    phone: '+1 (555) 123-4567',
-    address: '123 Medical Center Drive',
-    city: 'Healthcare City',
-    state: 'CA',
-    zipCode: '90210',
-    specialization: 'Cardiology',
-    licenseNumber: 'MD123456789',
-    dateOfBirth: '1980-05-15',
-    joinDate: '2020-01-15'
-  });
+  const [profile, setProfile] = useState<UserProfile | null>(null);
+  const [editedProfile, setEditedProfile] = useState<UserProfile | null>(null);
 
-  const [editedProfile, setEditedProfile] = useState<UserProfile>(profile);
+  // Initialize profile from auth user
+  useEffect(() => {
+    if (user) {
+      const userProfile = convertAuthUserToProfile(user);
+      setProfile(userProfile);
+      setEditedProfile(userProfile);
+    }
+  }, [user]);
 
   // Simulate loading delay
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, []);
+
+  if (!profile || !user) {
+    return (
+      <div className={styles.profileContainer}>
+        <div className={styles.loadingState}>
+          <FaUser className={styles.loadingIcon} />
+          <p>Loading profile...</p>
+        </div>
+      </div>
+    );
+  }
 
   const handleEdit = (section: string) => {
     setEditingSection(section);
@@ -68,20 +125,40 @@ const Profile: React.FC = () => {
   };
 
   const handleSave = (section: string) => {
-    setProfile(editedProfile);
-    setEditingSection(null);
+    if (editedProfile) {
+      setProfile(editedProfile);
+      
+      // Update the auth store with the new name if it changed
+      if (section === 'personal') {
+        const newName = `${editedProfile.firstName} ${editedProfile.lastName}`.trim();
+        if (newName !== user.name) {
+          updateUser({ name: newName });
+        }
+      }
+      
+      // Update email in auth store if it changed
+      if (section === 'contact' && editedProfile.email !== user.email) {
+        updateUser({ email: editedProfile.email });
+      }
+      
+      setEditingSection(null);
+    }
   };
 
   const handleCancel = () => {
-    setEditedProfile(profile);
-    setEditingSection(null);
+    if (profile) {
+      setEditedProfile(profile);
+      setEditingSection(null);
+    }
   };
 
   const handleInputChange = (field: keyof UserProfile, value: string) => {
-    setEditedProfile(prev => ({
-      ...prev,
-      [field]: value
-    }));
+    if (editedProfile) {
+      setEditedProfile(prev => prev ? ({
+        ...prev,
+        [field]: value
+      }) : null);
+    }
   };
 
   const formatDate = (dateString: string) => {
@@ -98,7 +175,15 @@ const Profile: React.FC = () => {
         <div className={styles.avatarSection}>
           <div className={styles.avatarContainer}>
             <div className={styles.avatar}>
-              <FaUser />
+              {profile.avatar ? (
+                <img
+                  src={profile.avatar}
+                  alt={`${profile.firstName} ${profile.lastName}`}
+                  className={styles.avatarImage}
+                />
+              ) : (
+                <FaUser />
+              )}
             </div>
             <button className={styles.avatarEditButton}>
               <FaCamera />
@@ -133,7 +218,7 @@ const Profile: React.FC = () => {
           <div className={styles.formGrid}>
             <FormField
               label="First Name"
-              value={editingSection === 'personal' ? editedProfile.firstName : profile.firstName}
+              value={editingSection === 'personal' ? (editedProfile?.firstName || '') : profile.firstName}
               placeholder="Enter first name"
               isEditing={editingSection === 'personal'}
               isLoading={isLoading}
@@ -142,7 +227,7 @@ const Profile: React.FC = () => {
             />
             <FormField
               label="Last Name"
-              value={editingSection === 'personal' ? editedProfile.lastName : profile.lastName}
+              value={editingSection === 'personal' ? (editedProfile?.lastName || '') : profile.lastName}
               placeholder="Enter last name"
               isEditing={editingSection === 'personal'}
               isLoading={isLoading}
@@ -151,7 +236,7 @@ const Profile: React.FC = () => {
             />
             <FormField
               label="Date of Birth"
-              value={editingSection === 'personal' ? editedProfile.dateOfBirth : formatDate(profile.dateOfBirth)}
+              value={editingSection === 'personal' ? (editedProfile?.dateOfBirth || '') : formatDate(profile.dateOfBirth)}
               type="date"
               isEditing={editingSection === 'personal'}
               isLoading={isLoading}
@@ -159,7 +244,7 @@ const Profile: React.FC = () => {
             />
             <FormField
               label="Specialization"
-              value={editingSection === 'personal' ? editedProfile.specialization : profile.specialization}
+              value={editingSection === 'personal' ? (editedProfile?.specialization || '') : profile.specialization}
               placeholder="Enter medical specialization"
               isEditing={editingSection === 'personal'}
               isLoading={isLoading}
@@ -180,7 +265,7 @@ const Profile: React.FC = () => {
           <div className={styles.formGrid}>
             <FormField
               label="Email Address"
-              value={editingSection === 'contact' ? editedProfile.email : profile.email}
+              value={editingSection === 'contact' ? (editedProfile?.email || '') : profile.email}
               type="email"
               placeholder="Enter email address"
               icon={<FaEnvelope />}
@@ -191,7 +276,7 @@ const Profile: React.FC = () => {
             />
             <FormField
               label="Phone Number"
-              value={editingSection === 'contact' ? editedProfile.phone : profile.phone}
+              value={editingSection === 'contact' ? (editedProfile?.phone || '') : profile.phone}
               type="tel"
               placeholder="Enter phone number"
               icon={<FaPhone />}
@@ -214,7 +299,7 @@ const Profile: React.FC = () => {
           <div className={styles.formGrid}>
             <FormField
               label="Street Address"
-              value={editingSection === 'address' ? editedProfile.address : profile.address}
+              value={editingSection === 'address' ? (editedProfile?.address || '') : profile.address}
               placeholder="Enter street address"
               isEditing={editingSection === 'address'}
               isLoading={isLoading}
@@ -222,7 +307,7 @@ const Profile: React.FC = () => {
             />
             <FormField
               label="City"
-              value={editingSection === 'address' ? editedProfile.city : profile.city}
+              value={editingSection === 'address' ? (editedProfile?.city || '') : profile.city}
               placeholder="Enter city"
               isEditing={editingSection === 'address'}
               isLoading={isLoading}
@@ -230,7 +315,7 @@ const Profile: React.FC = () => {
             />
             <FormField
               label="State"
-              value={editingSection === 'address' ? editedProfile.state : profile.state}
+              value={editingSection === 'address' ? (editedProfile?.state || '') : profile.state}
               placeholder="Enter state"
               isEditing={editingSection === 'address'}
               isLoading={isLoading}
@@ -238,7 +323,7 @@ const Profile: React.FC = () => {
             />
             <FormField
               label="ZIP Code"
-              value={editingSection === 'address' ? editedProfile.zipCode : profile.zipCode}
+              value={editingSection === 'address' ? (editedProfile?.zipCode || '') : profile.zipCode}
               placeholder="Enter ZIP code"
               isEditing={editingSection === 'address'}
               isLoading={isLoading}
@@ -259,7 +344,7 @@ const Profile: React.FC = () => {
           <div className={styles.formGrid}>
             <FormField
               label="License Number"
-              value={editingSection === 'professional' ? editedProfile.licenseNumber : profile.licenseNumber}
+              value={editingSection === 'professional' ? (editedProfile?.licenseNumber || '') : profile.licenseNumber}
               placeholder="Enter medical license number"
               isEditing={editingSection === 'professional'}
               isLoading={isLoading}
