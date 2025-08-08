@@ -16,7 +16,7 @@ const AuthDemo: React.FC = () => {
     refreshToken 
   } = useAuth();
   
-  const { isAdmin, isModerator, isUser, hasRole } = useRole();
+  const { isAdmin, isModerator, isUser } = useRole();
 
   const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
   const [loginForm, setLoginForm] = useState<LoginCredentials>({
