@@ -1,12 +1,14 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { createEncryptedStorage } from '../utils/encryptedStorage';
+import { clearEncryptionKeys } from '../utils/encryption';
 
 // User interface
 export interface User {
   id: string;
   email: string;
   name: string;
-  role: 'admin' | 'user' | 'moderator';
+  role: string;
   avatar?: string;
   createdAt: string;
   lastLogin?: string;
@@ -187,6 +189,9 @@ export const useAuthStore = create<AuthState>()(
 
       // Logout
       logout: () => {
+        // Clear encryption keys for security
+        clearEncryptionKeys();
+        
         set({
           user: null,
           token: null,
@@ -229,6 +234,7 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       name: 'auth-storage',
+      storage: createEncryptedStorage<Pick<AuthState, 'user' | 'token' | 'isAuthenticated'>>(),
       partialize: (state) => ({
         user: state.user,
         token: state.token,
