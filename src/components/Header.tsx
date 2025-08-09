@@ -2,13 +2,15 @@ import React, { useState, useRef } from 'react';
 import styles from './Header.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../store/authStore';
-import { FaBars, FaUser, FaCog, FaSignOutAlt, FaStethoscope } from 'react-icons/fa';
+import { FaBars, FaUser, FaCog, FaSignOutAlt, FaStethoscope, FaMoon, FaSun } from 'react-icons/fa';
 import { useSidePanelContext } from '../contexts/SidePanelContext';
+import { useTheme } from '../store/themeStore';
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const { toggleSidePanel } = useSidePanelContext();
+  const { isDarkMode, toggleTheme } = useTheme();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const timeoutRef = useRef<number | null>(null);
 
@@ -92,6 +94,17 @@ const Header: React.FC = () => {
             >
               <FaCog className={styles.dropdownIcon} />
               Access Landing
+            </button>
+            <button
+              onClick={toggleTheme}
+              className={styles.dropdownItem}
+            >
+              {isDarkMode ? (
+                <FaSun className={styles.dropdownIcon} />
+              ) : (
+                <FaMoon className={styles.dropdownIcon} />
+              )}
+              {isDarkMode ? 'Light Mode' : 'Dark Mode'}
             </button>
             <a href="#" className={styles.dropdownItem}>
               <FaCog className={styles.dropdownIcon} />

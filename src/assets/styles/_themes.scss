@@ -1,3 +1,4 @@
+// SCSS Variables (for backward compatibility)
 $primary: #007BBA;
 $secondary: #38B2AC;
 $accent: #6DBE45;
@@ -5,3 +6,149 @@ $background: #F7F9FA;
 $text-primary: #2E2E2E;
 $text-secondary: #6B7280;
 $alert-warning: #DC4C64;
+
+// CSS Custom Properties for Theme Support
+:root {
+  // Light theme (default)
+  --primary-color: #007BBA;
+  --secondary-color: #38B2AC;
+  --accent-color: #6DBE45;
+  --background-color: #F7F9FA;
+  --surface-color: #FFFFFF;
+  --text-primary: #2E2E2E;
+  --text-secondary: #6B7280;
+  --text-muted: #9CA3AF;
+  --border-color: #E5E7EB;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --alert-warning: #DC4C64;
+  --alert-success: #10B981;
+  --alert-info: #3B82F6;
+  
+  // Dashboard/Content theme (light mode)
+  --card-background: #FFFFFF;
+  
+  // Medical theme specific
+  --medical-primary: #007BBA;
+  --medical-secondary: #38B2AC;
+  --medical-accent: #6DBE45;
+  --medical-emergency: #DC4C64;
+  
+  // Side panel theme (light mode)
+  --side-panel-bg: linear-gradient(180deg, #007bbf 0%, #005a8b 50%, #009688 100%);
+  --side-panel-border: rgba(255, 255, 255, 0.15);
+  --side-panel-header-bg: rgba(255, 255, 255, 0.05);
+  --side-panel-text: white;
+  --side-panel-button-bg: rgba(255, 255, 255, 0.1);
+  --side-panel-button-border: rgba(255, 255, 255, 0.2);
+  --side-panel-nav-bg: rgba(255, 255, 255, 0.15);
+  --side-panel-nav-text: rgba(255, 255, 255, 0.9);
+  --side-panel-section-title: rgba(255, 255, 255, 0.7);
+  
+  // Header theme (light mode)
+  --header-bg: linear-gradient(135deg, #007bbf 0%, #009688 100%);
+  --header-text: white;
+  --header-shadow: 0 0.125rem 0.5rem rgba(0, 123, 191, 0.2);
+  --header-border: rgba(255, 255, 255, 0.1);
+  --header-logo-bg: rgba(255, 255, 255, 0.15);
+  --header-logo-border: rgba(255, 255, 255, 0.2);
+  --header-logo-hover: rgba(255, 255, 255, 0.2);
+  --header-subtitle: rgba(255, 255, 255, 0.8);
+  --header-button-bg: rgba(255, 255, 255, 0.1);
+  --header-button-border: rgba(255, 255, 255, 0.2);
+  --header-button-hover: rgba(255, 255, 255, 0.2);
+  --header-user-bg: rgba(255, 255, 255, 0.1);
+  --header-user-border: rgba(255, 255, 255, 0.2);
+  --header-user-hover: rgba(255, 255, 255, 0.15);
+  --header-welcome-text: rgba(255, 255, 255, 0.9);
+  --header-avatar-bg: rgba(255, 255, 255, 0.2);
+  --header-avatar-border: rgba(255, 255, 255, 0.3);
+  --header-dropdown-btn-bg: rgba(255, 255, 255, 0.1);
+  --header-dropdown-btn-border: rgba(255, 255, 255, 0.2);
+  --header-dropdown-btn-hover: rgba(255, 255, 255, 0.2);
+  --header-dropdown-bg: white;
+  --header-dropdown-text: #2c3e50;
+  --header-dropdown-hover-text: #007bbf;
+  --header-dropdown-icon: #7f8c8d;
+}
+
+// Dark theme - Medical Professional
+[data-theme="dark"] {
+  --primary-color: #2E86AB;        // Deep medical blue - trust and professionalism
+  --secondary-color: #4ECDC4;      // Soft teal - healing and calm
+  --accent-color: #7FB069;         // Muted sage green - health and growth
+  --background-color: #0A1628;     // Deep navy - professional and calming
+  --surface-color: #1A2332;        // Darker blue-gray - clean medical surfaces
+  --text-primary: #F0F4F8;         // Soft white - easy on eyes for long use
+  --text-secondary: #B8C5D1;       // Light blue-gray - secondary medical text
+  --text-muted: #6B7A8A;           // Muted blue-gray - subtle information
+  --border-color: #2D3748;         // Subtle borders - clean separation
+  --shadow-color: rgba(0, 0, 0, 0.4); // Deeper shadows for medical UI depth
+  --alert-warning: #E53E3E;        // Medical red - critical alerts
+  --alert-success: #38A169;        // Medical green - positive outcomes
+  --alert-info: #3182CE;           // Medical blue - informational
+  
+  // Dashboard/Content theme (dark mode)
+  --card-background: #1A2332;      // Clean medical card background
+  
+  // Medical theme specific (dark)
+  --medical-primary: #2E86AB;      // Primary medical blue
+  --medical-secondary: #4ECDC4;    // Secondary teal for accents
+  --medical-accent: #7FB069;       // Health-focused green
+  --medical-emergency: #E53E3E;    // Emergency/critical red
+  
+  // Side panel theme (dark mode) - Medical Professional
+  --side-panel-bg: linear-gradient(180deg, #1A2332 0%, #0A1628 50%, #0F1B2A 100%);
+  --side-panel-border: rgba(78, 205, 196, 0.15);  // Subtle teal border
+  --side-panel-header-bg: rgba(46, 134, 171, 0.1); // Medical blue header
+  --side-panel-text: #F0F4F8;                      // Clean white text
+  --side-panel-button-bg: rgba(46, 134, 171, 0.12); // Medical blue buttons
+  --side-panel-button-border: rgba(78, 205, 196, 0.2); // Teal button borders
+  --side-panel-nav-bg: rgba(127, 176, 105, 0.08);   // Subtle green nav background
+  --side-panel-nav-text: rgba(240, 244, 248, 0.95); // High contrast nav text
+  --side-panel-section-title: rgba(184, 197, 209, 0.85); // Clear section titles
+  
+  // Header theme (dark mode) - Medical Professional
+  --header-bg: linear-gradient(135deg, #1A2332 0%, #0A1628 100%);
+  --header-text: #F0F4F8;                          // Clean medical white
+  --header-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.4);
+  --header-border: rgba(78, 205, 196, 0.15);       // Subtle teal border
+  --header-logo-bg: rgba(46, 134, 171, 0.15);      // Medical blue logo background
+  --header-logo-border: rgba(78, 205, 196, 0.25);  // Teal logo border
+  --header-logo-hover: rgba(46, 134, 171, 0.25);   // Medical blue hover
+  --header-subtitle: rgba(184, 197, 209, 0.85);    // Clear subtitle text
+  --header-button-bg: rgba(46, 134, 171, 0.12);    // Medical blue buttons
+  --header-button-border: rgba(78, 205, 196, 0.2); // Teal button borders
+  --header-button-hover: rgba(46, 134, 171, 0.2);  // Medical blue hover
+  --header-user-bg: rgba(127, 176, 105, 0.1);      // Subtle green user area
+  --header-user-border: rgba(78, 205, 196, 0.2);   // Teal user border
+  --header-user-hover: rgba(127, 176, 105, 0.15);  // Green user hover
+  --header-welcome-text: rgba(240, 244, 248, 0.95); // High contrast welcome text
+  --header-avatar-bg: rgba(46, 134, 171, 0.2);     // Medical blue avatar
+  --header-avatar-border: rgba(78, 205, 196, 0.3); // Teal avatar border
+  --header-dropdown-btn-bg: rgba(46, 134, 171, 0.1); // Medical blue dropdown
+  --header-dropdown-btn-border: rgba(78, 205, 196, 0.2); // Teal dropdown border
+  --header-dropdown-btn-hover: rgba(46, 134, 171, 0.2); // Medical blue dropdown hover
+  --header-dropdown-bg: #1A2332;                   // Clean dropdown background
+  --header-dropdown-text: #F0F4F8;                 // Clean dropdown text
+  --header-dropdown-hover-text: #4ECDC4;           // Teal hover text
+  --header-dropdown-icon: #B8C5D1;                 // Light blue-gray icons
+}
+
+// Utility classes for theme-aware styling
+.theme-surface {
+  background-color: var(--surface-color);
+  color: var(--text-primary);
+}
+
+.theme-background {
+  background-color: var(--background-color);
+  color: var(--text-primary);
+}
+
+.theme-border {
+  border-color: var(--border-color);
+}
+
+.theme-shadow {
+  box-shadow: 0 1px 3px var(--shadow-color);
+}

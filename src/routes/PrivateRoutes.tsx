@@ -22,7 +22,7 @@ const PrivateRoutesContent = () => {
         minWidth: 0 // Prevent flex item from overflowing
       }}>
         <Header />
-        <div style={{ flex: 1, padding: '5.5rem', overflow: 'auto' }}>
+        <div style={{ flex: 1, padding: '5.5rem', overflow: 'auto', paddingTop: '10rem' }}>
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/profile" element={<Profile />} />

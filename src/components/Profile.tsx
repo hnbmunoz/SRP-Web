@@ -3,6 +3,7 @@ import styles from './Profile.module.scss';
 import ProfileSection from './custom-component/ProfileSection/ProfileSection';
 import FormField from './custom-component/FormField/FormField';
 import { useAuth } from '../store/authStore';
+import { useTheme } from '../store/themeStore';
 import {
   FaUser,
   FaEnvelope,
@@ -12,7 +13,10 @@ import {
   FaStethoscope,
   FaCalendarAlt,
   FaIdCard,
-  FaLock
+  FaLock,
+  FaPalette,
+  FaMoon,
+  FaSun
 } from 'react-icons/fa';
 
 interface UserProfile {
@@ -85,6 +89,7 @@ const convertAuthUserToProfile = (authUser: any): UserProfile => {
 
 const Profile: React.FC = () => {
   const { user, updateUser } = useAuth();
+  const { isDarkMode, toggleTheme } = useTheme();
   const [editingSection, setEditingSection] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [profile, setProfile] = useState<UserProfile | null>(null);
@@ -376,6 +381,45 @@ const Profile: React.FC = () => {
               <FaLock />
               Two-Factor Authentication
             </button>
+          </div>
+        </ProfileSection>
+
+        {/* Appearance Settings Section */}
+        <ProfileSection
+          title="Appearance Settings"
+          icon={<FaPalette />}
+          hideActions={true}
+        >
+          <div className={styles.appearanceSettings}>
+            <div className={styles.themeToggle}>
+              <div className={styles.themeInfo}>
+                <div className={styles.themeIcon}>
+                  {isDarkMode ? <FaMoon /> : <FaSun />}
+                </div>
+                <div className={styles.themeDetails}>
+                  <h4 className={styles.themeTitle}>
+                    {isDarkMode ? 'Dark Mode' : 'Light Mode'}
+                  </h4>
+                  <p className={styles.themeDescription}>
+                    {isDarkMode
+                      ? 'Switch to light mode for a brighter interface'
+                      : 'Switch to dark mode for a comfortable viewing experience'
+                    }
+                  </p>
+                </div>
+              </div>
+              <button
+                className={`${styles.toggleButton} ${isDarkMode ? styles.dark : styles.light}`}
+                onClick={toggleTheme}
+                aria-label={`Switch to ${isDarkMode ? 'light' : 'dark'} mode`}
+              >
+                <div className={styles.toggleSlider}>
+                  <div className={styles.toggleIcon}>
+                    {isDarkMode ? <FaMoon /> : <FaSun />}
+                  </div>
+                </div>
+              </button>
+            </div>
           </div>
         </ProfileSection>
       </div>

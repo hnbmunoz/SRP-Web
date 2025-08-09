@@ -1,13 +1,21 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { useEffect } from 'react';
 import PublicRoutes from './routes/PublicRoutes';
 import PrivateRoutes from './routes/PrivateRoutes';
 import LandingPage from './components/landing-page/LandingPage';
 import AuthDemo from './components/AuthDemo';
 import './App.css';
 import { useAuth } from './store/authStore';
+import { useTheme } from './store/themeStore';
 
 function App() {
   const { isAuthenticated } = useAuth();
+  const { initializeTheme } = useTheme();
+
+  // Initialize theme on app startup
+  useEffect(() => {
+    initializeTheme();
+  }, [initializeTheme]);
 
   return (
     <BrowserRouter>
