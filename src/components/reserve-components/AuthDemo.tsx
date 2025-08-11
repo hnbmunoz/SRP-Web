@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAuth, useRole, type LoginCredentials, type RegisterCredentials } from '../store/authStore';
+import { useAuth, useRole, type LoginCredentials, type RegisterCredentials } from '../../store/authStore';
 import styles from './AuthDemo.module.scss';
 
 const AuthDemo: React.FC = () => {
