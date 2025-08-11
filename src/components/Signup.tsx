@@ -3,6 +3,7 @@ import { useAuth } from '../store/authStore';
 import { useNavigate, Link } from 'react-router-dom';
 import styles from './Signup.module.scss';
 import LoadingOverlay from './custom-component/Loading';
+import Dropdown, { type DropdownOption } from './custom-component/Dropdown/Dropdown';
 
 interface SignupProps {}
 
@@ -11,6 +12,7 @@ interface FormErrors {
   email?: string;
   password?: string;
   confirmPassword?: string;
+  specialties?: string;
   terms?: string;
 }
 
@@ -19,6 +21,7 @@ interface FormTouched {
   email: boolean;
   password: boolean;
   confirmPassword: boolean;
+  specialties: boolean;
   terms: boolean;
 }
 
@@ -29,6 +32,7 @@ const Signup: React.FC<SignupProps> = () => {
     password: '',
     confirmPassword: ''
   });
+  const [selectedSpecialties, setSelectedSpecialties] = useState<DropdownOption[]>([]);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [acceptTerms, setAcceptTerms] = useState(false);
@@ -38,8 +42,33 @@ const Signup: React.FC<SignupProps> = () => {
     email: false,
     password: false,
     confirmPassword: false,
+    specialties: false,
     terms: false
   });
+
+  // Medical specialties options for multi-select dropdown
+  const medicalSpecialties: DropdownOption[] = [
+    { value: 'cardiology', label: 'Cardiology', icon: '❤️' },
+    { value: 'dermatology', label: 'Dermatology', icon: '🧴' },
+    { value: 'endocrinology', label: 'Endocrinology', icon: '🔬' },
+    { value: 'gastroenterology', label: 'Gastroenterology', icon: '🫁' },
+    { value: 'neurology', label: 'Neurology', icon: '🧠' },
+    { value: 'oncology', label: 'Oncology', icon: '🎗️' },
+    { value: 'orthopedics', label: 'Orthopedics', icon: '🦴' },
+    { value: 'pediatrics', label: 'Pediatrics', icon: '👶' },
+    { value: 'psychiatry', label: 'Psychiatry', icon: '🧘' },
+    { value: 'radiology', label: 'Radiology', icon: '📡' },
+    { value: 'surgery', label: 'Surgery', icon: '🔪' },
+    { value: 'urology', label: 'Urology', icon: '🫘' },
+    { value: 'emergency', label: 'Emergency Medicine', icon: '🚨' },
+    { value: 'family', label: 'Family Medicine', icon: '👨‍👩‍👧‍👦' },
+    { value: 'internal', label: 'Internal Medicine', icon: '🩺' },
+    { value: 'obstetrics', label: 'Obstetrics & Gynecology', icon: '🤱' },
+    { value: 'ophthalmology', label: 'Ophthalmology', icon: '👁️' },
+    { value: 'pathology', label: 'Pathology', icon: '🔬' },
+    { value: 'anesthesiology', label: 'Anesthesiology', icon: '💉' },
+    { value: 'rehabilitation', label: 'Physical Medicine & Rehabilitation', icon: '🏃‍♂️' }
+  ];
 
   const { register, isLoading, error, clearError, isAuthenticated } = useAuth();
   const navigate = useNavigate();
@@ -100,6 +129,11 @@ const Signup: React.FC<SignupProps> = () => {
         if (value !== formData.password) return 'Passwords do not match';
         return undefined;
       
+      case 'specialties':
+        if (selectedSpecialties.length === 0) return 'Please select at least one medical specialty of interest';
+        if (selectedSpecialties.length > 5) return 'Please select no more than 5 specialties';
+        return undefined;
+      
       case 'terms':
         if (!acceptTerms) return 'You must accept the terms and conditions';
         return undefined;
@@ -115,7 +149,7 @@ const Signup: React.FC<SignupProps> = () => {
     
     Object.keys(touched).forEach(field => {
       if (touched[field as keyof FormTouched]) {
-        if (field === 'terms') {
+        if (field === 'terms' || field === 'specialties') {
           const error = validateField(field, '');
           if (error) newErrors[field as keyof FormErrors] = error;
         } else {
@@ -127,7 +161,7 @@ const Signup: React.FC<SignupProps> = () => {
     });
     
     setErrors(newErrors);
-  }, [formData, acceptTerms, touched]);
+  }, [formData, acceptTerms, selectedSpecialties, touched]);
 
   const handleInputChange = (field: keyof typeof formData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -148,10 +182,12 @@ const Signup: React.FC<SignupProps> = () => {
     const emailError = validateField('email', formData.email);
     const passwordError = validateField('password', formData.password);
     const confirmPasswordError = validateField('confirmPassword', formData.confirmPassword);
+    const specialtiesError = validateField('specialties', '');
     const termsError = validateField('terms', '');
     
-    return !nameError && !emailError && !passwordError && !confirmPasswordError && !termsError &&
-           formData.name && formData.email && formData.password && formData.confirmPassword && acceptTerms;
+    return !nameError && !emailError && !passwordError && !confirmPasswordError && !specialtiesError && !termsError &&
+           formData.name && formData.email && formData.password && formData.confirmPassword &&
+           selectedSpecialties.length > 0 && acceptTerms;
   };
 
   const handleSignup = async (e: React.FormEvent) => {
@@ -164,14 +200,16 @@ const Signup: React.FC<SignupProps> = () => {
     const emailError = validateField('email', formData.email);
     const passwordError = validateField('password', formData.password);
     const confirmPasswordError = validateField('confirmPassword', formData.confirmPassword);
+    const specialtiesError = validateField('specialties', '');
     const termsError = validateField('terms', '');
     
-    if (nameError || emailError || passwordError || confirmPasswordError || termsError) {
+    if (nameError || emailError || passwordError || confirmPasswordError || specialtiesError || termsError) {
       setErrors({
         name: nameError,
         email: emailError,
         password: passwordError,
         confirmPassword: confirmPasswordError,
+        specialties: specialtiesError,
         terms: termsError
       });
       setTouched({
@@ -179,6 +217,7 @@ const Signup: React.FC<SignupProps> = () => {
         email: true,
         password: true,
         confirmPassword: true,
+        specialties: true,
         terms: true
       });
       return;
@@ -188,7 +227,8 @@ const Signup: React.FC<SignupProps> = () => {
       await register({
         name: formData.name.trim(),
         email: formData.email.trim(),
-        password: formData.password
+        password: formData.password,
+        specialties: selectedSpecialties.map(s => s.value)
       });
     } catch (error) {
       console.error('Signup failed:', error);
@@ -382,6 +422,36 @@ const Signup: React.FC<SignupProps> = () => {
                   {errors.confirmPassword}
                 </div>
               )}
+            </div>
+
+            {/* Medical Specialties Multi-Select */}
+            <div className={styles.inputGroup}>
+              <Dropdown
+                label="Medical Specialties of Interest"
+                options={medicalSpecialties}
+                value={selectedSpecialties}
+                placeholder="Select your areas of medical interest..."
+                isMulti={true}
+                isSearchable={true}
+                isClearable={true}
+                closeMenuOnSelect={false}
+                hideSelectedOptions={false}
+                maxMenuHeight={200}
+                size="medium"
+                required={true}
+                error={errors.specialties}
+                helperText={selectedSpecialties.length === 0
+                  ? "Select 1-5 medical specialties that interest you most"
+                  : `${selectedSpecialties.length}/5 specialties selected`
+                }
+                onChange={(newValue) => {
+                  setSelectedSpecialties(newValue as DropdownOption[]);
+                  setTouched(prev => ({ ...prev, specialties: true }));
+                }}
+                onBlur={() => handleInputBlur('specialties')}
+                onFocus={() => handleInputFocus('specialties')}
+                icon="🏥"
+              />
             </div>
 
             {/* Terms and Conditions */}

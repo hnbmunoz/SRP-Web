@@ -24,6 +24,7 @@ export interface RegisterCredentials {
   email: string;
   password: string;
   name: string;
+  specialties?: (string | number)[];
 }
 
 // Authentication state interface
