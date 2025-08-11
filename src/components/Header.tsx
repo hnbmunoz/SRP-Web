@@ -106,10 +106,14 @@ const Header: React.FC = () => {
               )}
               {isDarkMode ? 'Light Mode' : 'Dark Mode'}
             </button>
-            <a href="#" className={styles.dropdownItem}>
+
+            <button
+              onClick={() => navigate('/system-settings')}
+              className={styles.dropdownItem}
+            >
               <FaCog className={styles.dropdownIcon} />
               System Settings
-            </a>
+            </button>
             <div className={styles.dropdownDivider}></div>
             <button onClick={handleLogout} className={styles.dropdownItem}>
               <FaSignOutAlt className={styles.dropdownIcon} />
