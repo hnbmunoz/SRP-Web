@@ -342,7 +342,7 @@ The authentication system integrates with:
 ## Testing Credentials
 
 For development and testing, use these mock credentials:
-
+Take note remove these mock credentials when there is a back end integration
 ```
 Admin User:
 Email: admin@example.com
