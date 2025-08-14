@@ -132,7 +132,7 @@ const Dropdown: React.FC<DropdownProps> = ({
 }) => {
   // Generate custom styles for react-select
   const customStyles: StylesConfig<DropdownOption, boolean> = {
-    control: (provided, state) => ({
+    control: (provided, _state) => ({
       ...provided,
       minHeight: size === 'small' ? '36px' : size === 'large' ? '52px' : '44px',
       border: 'none',

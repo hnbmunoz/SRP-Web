@@ -1,4 +1,3 @@
-import React from 'react';
 // Hero Icons (Outline)
 import {
   UserIcon,

@@ -11,7 +11,7 @@ interface DashboardCardProps {
   icon?: string;
 }
 
-const DashboardCard: React.FC<DashboardCardProps> = ({ title, description, items, path, icon }) => {
+const DashboardCard: React.FC<DashboardCardProps> = ({ title, description, items, path, icon: _icon }) => {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
@@ -58,7 +58,6 @@ const DashboardCard: React.FC<DashboardCardProps> = ({ title, description, items
 };
 
 const Dashboard: React.FC = () => {
-  const navigate = useNavigate();
 
   // Medical dashboard modules
   const dashboardModules = [

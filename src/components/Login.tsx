@@ -3,7 +3,6 @@ import { useAuth } from '../store/authStore';
 import { useNavigate, Link } from 'react-router-dom';
 import styles from './Login.module.scss';
 import LoadingOverlay from './custom-component/Loading';
-import LoadingDemo from './LoadingDemo';
 
 interface LoginProps {}
 
