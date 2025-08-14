@@ -175,7 +175,7 @@ export function clearEncryptionKeys(): void {
 /**
  * Create encrypted storage interface for Zustand persist
  */
-export const createEncryptedStorage = () => ({
+export const createEncryptedStorage = () => ({  
   getItem: (name: string) => {
     try {
       const encryptedValue = localStorage.getItem(name);
