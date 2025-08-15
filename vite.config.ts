@@ -43,6 +43,16 @@ export default defineConfig({
       apply: 'build'
     })
   ],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // Use modern Sass API (Dart Sass)
+        api: 'modern-compiler',
+        // Silence deprecation warnings for @import
+        silenceDeprecations: ['legacy-js-api']
+      }
+    }
+  },
   server: {
     port: 8080,
   },

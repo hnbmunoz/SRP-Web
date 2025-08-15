@@ -1,8 +1,9 @@
-@import '../../../../assets/styles/themes';
+@use '../../../../assets/styles/themes' as *;
+@use 'sass:color';
 
 .features {
   padding: 6rem 0;
-  background: linear-gradient(180deg, $background 0%, lighten($background, 2%) 100%);
+  background: linear-gradient(180deg, $background 0%, color.adjust($background, $lightness: 2%) 100%);
   position: relative;
 
   @media (max-width: 768px) {
@@ -45,12 +46,12 @@
 .badgeText {
   font-size: 0.875rem;
   font-weight: 600;
-  color: darken($accent, 15%);
+  color: color.adjust($accent, $lightness: -15%);
   letter-spacing: 0.025em;
 }
 
 .title {
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: #{"clamp(2rem, 4vw, 3rem)"};
   font-weight: 700;
   line-height: 1.2;
   color: $text-primary;
@@ -69,7 +70,7 @@
     left: 0;
     right: 0;
     height: 0.25em;
-    background: linear-gradient(90deg, $accent, lighten($accent, 20%));
+    background: linear-gradient(90deg, $accent, color.adjust($accent, $lightness: 20%));
     opacity: 0.4;
     border-radius: 2px;
   }
@@ -120,7 +121,7 @@
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, $accent, lighten($accent, 15%), lighten($accent, 30%));
+    background: linear-gradient(90deg, $accent, color.adjust($accent, $lightness: 15%), color.adjust($accent, $lightness: 30%));
     transform: scaleX(0);
     transition: transform 0.3s ease;
   }
@@ -134,8 +135,8 @@
     }
 
     .iconWrapper {
-      transform: scale(1.1);
-      background: linear-gradient(135deg, $accent, lighten($accent, 10%));
+      transform: #{"scale(1.1)"};
+      background: linear-gradient(135deg, $accent, color.adjust($accent, $lightness: 10%));
     }
 
     .learnMoreButton {

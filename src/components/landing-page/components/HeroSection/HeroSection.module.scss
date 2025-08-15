@@ -1,11 +1,12 @@
-@import '../../../../assets/styles/themes';
+@use '../../../../assets/styles/themes' as *;
+@use 'sass:color';
 
 .hero {
   position: relative;
   min-height: 100vh;
   display: flex;
   align-items: center;
-  background: linear-gradient(135deg, $background 0%, lighten($accent, 35%) 100%);
+  background: linear-gradient(135deg, $background 0%, color.adjust($accent, $lightness: 35%) 100%);
   overflow: hidden;
   padding: 2rem 0;
 
@@ -65,12 +66,12 @@
 .badgeText {
   font-size: 0.875rem;
   font-weight: 600;
-  color: darken($accent, 15%);
+  color: color.adjust($accent, $lightness: -15%);
   letter-spacing: 0.025em;
 }
 
 .title {
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-size: #{"clamp(2.5rem, 5vw, 4rem)"};
   font-weight: 800;
   line-height: 1.1;
   color: $text-primary;
@@ -93,7 +94,7 @@
     left: 0;
     right: 0;
     height: 0.3em;
-    background: linear-gradient(90deg, $accent, lighten($accent, 20%));
+    background: linear-gradient(90deg, $accent, color.adjust($accent, $lightness: 20%));
     opacity: 0.4;
     border-radius: 2px;
   }
@@ -135,7 +136,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 1rem 2rem;
-  background: linear-gradient(135deg, $accent, darken($accent, 10%));
+  background: linear-gradient(135deg, $accent, color.adjust($accent, $lightness: -10%));
   color: white;
   border: none;
   border-radius: 12px;
@@ -254,7 +255,7 @@
 .medicalIcon {
   width: 300px;
   height: 300px;
-  background: linear-gradient(135deg, $accent, lighten($accent, 15%));
+  background: linear-gradient(135deg, $accent, color.adjust($accent, $lightness: 15%));
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -395,11 +396,11 @@
 
 @keyframes pulse {
   0%, 100% {
-    transform: scale(1);
+    transform: #{"scale(1)"};
     opacity: 0.5;
   }
   50% {
-    transform: scale(1.1);
+    transform: #{"scale(1.1)"};
     opacity: 0.8;
   }
 }

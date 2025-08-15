@@ -12,6 +12,9 @@ Welcome to the MedPortal documentation. This directory contains comprehensive gu
 ### Authentication
 - **[Authentication Data Model](./authentication-data-model.md)** - User authentication and data structure
 
+### Security & Build Process
+- **[Code Obfuscation Process](./obfuscation-process.md)** - Complete guide to JavaScript obfuscation implementation
+
 ## 🎨 Theme System Overview
 
 The MedPortal application features a comprehensive dynamic theme system supporting both light and dark modes with medical-professional color schemes. The system provides:
@@ -58,6 +61,7 @@ const MyComponent = () => {
 2. **For Quick Reference**: Use the [Theme Quick Reference](./theme-quick-reference.md)
 3. **For Migration**: Follow the [Theme Migration Guide](./theme-migration-guide.md)
 4. **For Authentication**: Review the [Authentication Data Model](./authentication-data-model.md)
+5. **For Build & Security**: Check the [Code Obfuscation Process](./obfuscation-process.md)
 
 ## 🏗️ Project Structure
 

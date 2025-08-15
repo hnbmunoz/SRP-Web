@@ -1,4 +1,4 @@
-@import '../../assets/styles/themes';
+@use '../../assets/styles/themes' as *;
 
 .landingPage {
   min-height: 100vh;
@@ -163,12 +163,12 @@
 
 .scaleIn {
   opacity: 0;
-  transform: scale(0.8);
+  transform: #{"scale(0.8)"};
   transition: all 0.6s ease;
   
   &.animate {
     opacity: 1;
-    transform: scale(1);
+    transform: #{"scale(1)"};
   }
 }
 

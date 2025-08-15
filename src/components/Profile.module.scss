@@ -50,7 +50,7 @@
   overflow: hidden;
 
   &:hover {
-    transform: scale(1.05);
+    transform: #{"scale(1.05)"};
     border-color: rgba(255, 255, 255, 0.5);
   }
 
@@ -87,7 +87,7 @@
 
   &:hover {
     background: var(--medical-accent);
-    transform: scale(1.1);
+    transform: #{"scale(1.1)"};
   }
 }
 
@@ -281,11 +281,11 @@
 @keyframes pulse {
   0%, 100% {
     opacity: 1;
-    transform: scale(1);
+    transform: #{"scale(1)"};
   }
   50% {
     opacity: 0.7;
-    transform: scale(1.05);
+    transform: #{"scale(1.05)"};
   }
 }
 
@@ -377,7 +377,7 @@
   }
 
   &:hover {
-    transform: scale(1.05);
+    transform: #{"scale(1.05)"};
     box-shadow: 0 4px 12px rgba(0, 123, 186, 0.2);
   }
 
