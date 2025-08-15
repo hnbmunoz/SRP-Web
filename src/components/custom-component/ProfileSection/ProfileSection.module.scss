@@ -2,15 +2,15 @@
 @use 'sass:color';
 
 .profileSection {
-  background: white;
+  background: var(--surface-color);
   border-radius: 1rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px var(--shadow-color);
   overflow: hidden;
   transition: all 0.3s ease;
   animation: fadeInUp 0.6s ease-out;
 
   &:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px var(--shadow-color);
   }
 }
 
@@ -19,8 +19,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem 2rem;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  border-bottom: 1px solid #dee2e6;
+  background: var(--background-color);
+  border-bottom: 1px solid var(--border-color);
 
   @media (max-width: 768px) {
     padding: 1rem 1.5rem;
@@ -36,7 +36,7 @@
   gap: 0.75rem;
 
   svg {
-    color: $primary;
+    color: var(--primary-color);
     font-size: 1.25rem;
   }
 
@@ -44,7 +44,7 @@
     margin: 0;
     font-size: 1.25rem;
     font-weight: 600;
-    color: $text-primary;
+    color: var(--text-primary);
   }
 }
 
@@ -74,31 +74,31 @@
 }
 
 .editButton {
-  background: $primary;
+  background: var(--primary-color);
   color: white;
 
   &:hover {
-    background: color.adjust($primary, $lightness: -10%);
+    background: var(--secondary-color);
     transform: translateY(-1px);
   }
 }
 
 .saveButton {
-  background: $accent;
+  background: var(--accent-color);
   color: white;
 
   &:hover {
-    background: color.adjust($accent, $lightness: -10%);
+    background: var(--medical-accent);
     transform: translateY(-1px);
   }
 }
 
 .cancelButton {
-  background: $alert-warning;
+  background: var(--alert-warning);
   color: white;
 
   &:hover {
-    background: color.adjust($alert-warning, $lightness: -10%);
+    background: var(--medical-emergency);
     transform: translateY(-1px);
   }
 }
@@ -172,5 +172,73 @@
   &:hover {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
     transform: translateY(-2px);
+  }
+}
+
+// Dark theme support using CSS variables
+.profileSection.dark {
+  background: var(--surface-color);
+  box-shadow: 0 2px 8px var(--shadow-color);
+
+  &:hover {
+    box-shadow: 0 4px 12px var(--shadow-color);
+  }
+
+  .sectionHeader {
+    background: var(--background-color);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .sectionTitle {
+    svg {
+      color: var(--primary-color);
+    }
+
+    h3 {
+      color: var(--text-primary);
+    }
+  }
+
+  .editButton {
+    background: var(--primary-color);
+    color: var(--surface-color);
+
+    &:hover {
+      background: var(--secondary-color);
+    }
+  }
+
+  .saveButton {
+    background: var(--accent-color);
+    color: var(--surface-color);
+
+    &:hover {
+      background: var(--medical-accent);
+    }
+  }
+
+  .cancelButton {
+    background: var(--alert-warning);
+    color: var(--surface-color);
+
+    &:hover {
+      background: var(--medical-emergency);
+    }
+  }
+
+  &.loading {
+    .sectionContent {
+      background: linear-gradient(90deg, var(--border-color) 25%, var(--text-muted) 50%, var(--border-color) 75%);
+      background-size: 200% 100%;
+      animation: loading 1.5s infinite;
+    }
+  }
+
+  &.elevated {
+    box-shadow: 0 4px 12px var(--shadow-color);
+    
+    &:hover {
+      box-shadow: 0 8px 24px var(--shadow-color);
+    }
   }
 }

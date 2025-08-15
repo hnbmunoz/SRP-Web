@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './ProfileSection.module.scss';
 import { FaEdit, FaSave, FaTimes } from 'react-icons/fa';
+import { useThemeClass } from '../../../store/themeStore';
 
 export interface ProfileSectionProps {
   title: string;
@@ -25,8 +26,9 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({
   className = '',
   hideActions = false
 }) => {
+  const { themeClass } = useThemeClass();
   return (
-    <div className={`${styles.profileSection} ${className}`}>
+    <div className={`${styles.profileSection} ${styles[themeClass]} ${className}`}>
       <div className={styles.sectionHeader}>
         <div className={styles.sectionTitle}>
           {icon}

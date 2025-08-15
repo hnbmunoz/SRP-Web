@@ -3,7 +3,7 @@ import styles from './Profile.module.scss';
 import ProfileSection from './custom-component/ProfileSection/ProfileSection';
 import FormField from './custom-component/FormField/FormField';
 import { useAuth } from '../store/authStore';
-import { useTheme } from '../store/themeStore';
+import { useTheme, useThemeClass } from '../store/themeStore';
 import {
   FaUser,
   FaEnvelope,
@@ -90,6 +90,7 @@ const convertAuthUserToProfile = (authUser: any): UserProfile => {
 const Profile: React.FC = () => {
   const { user, updateUser } = useAuth();
   const { isDarkMode, toggleTheme } = useTheme();
+  const { themeClass } = useThemeClass();
   const [editingSection, setEditingSection] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [profile, setProfile] = useState<UserProfile | null>(null);
@@ -175,8 +176,8 @@ const Profile: React.FC = () => {
   };
 
   return (
-    <div className={styles.profileContainer}>
-      <div className={styles.profileHeader}>
+    <div className={`${styles.profileContainer} ${styles[themeClass]}`}>
+      <div className={`${styles.profileHeader} ${styles[themeClass]}`}>
         <div className={styles.avatarSection}>
           <div className={styles.avatarContainer}>
             <div className={styles.avatar}>

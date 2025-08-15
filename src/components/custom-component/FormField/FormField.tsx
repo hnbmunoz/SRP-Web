@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './FormField.module.scss';
+import { useThemeClass } from '../../../store/themeStore';
 
 export interface FormFieldProps {
   label: string;
@@ -28,6 +29,7 @@ const FormField: React.FC<FormFieldProps> = ({
   required = false,
   disabled = false
 }) => {
+  const { themeClass } = useThemeClass();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (onChange) {
       onChange(e.target.value);
@@ -67,7 +69,7 @@ const FormField: React.FC<FormFieldProps> = ({
   };
 
   return (
-    <div className={`${styles.formGroup} ${className} ${isLoading ? styles.loading : ''}`}>
+    <div className={`${styles.formGroup} ${styles[themeClass]} ${className} ${isLoading ? styles.loading : ''}`}>
       <label className={styles.formLabel}>
         {icon && <span className={styles.fieldIcon}>{icon}</span>}
         {label}

@@ -34,54 +34,55 @@
 
 .formInput {
   padding: 0.75rem 1rem;
-  border: 2px solid #e9ecef;
+  border: 2px solid var(--border-color);
   border-radius: 0.5rem;
   font-size: 1rem;
   transition: all 0.3s ease;
-  background: white;
+  background: var(--surface-color);
+  color: var(--text-primary);
   font-family: inherit;
 
   &:focus {
     outline: none;
-    border-color: $primary;
-    box-shadow: 0 0 0 3px rgba(0, 123, 186, 0.1);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(46, 134, 171, 0.1);
   }
 
   &:hover:not(:focus) {
-    border-color: #ced4da;
+    border-color: var(--text-muted);
   }
 
   &::placeholder {
-    color: $text-secondary;
+    color: var(--text-secondary);
     opacity: 0.7;
   }
 
   &.disabled {
-    background: #f8f9fa;
-    color: $text-secondary;
+    background: var(--background-color);
+    color: var(--text-secondary);
     cursor: not-allowed;
-    border-color: #e9ecef;
+    border-color: var(--border-color);
 
     &:hover {
-      border-color: #e9ecef;
+      border-color: var(--border-color);
     }
   }
 }
 
 .formValue {
   padding: 0.75rem 1rem;
-  background: #f8f9fa;
+  background: var(--background-color);
   border: 2px solid transparent;
   border-radius: 0.5rem;
   font-size: 1rem;
-  color: $text-primary;
+  color: var(--text-primary);
   min-height: 1.5rem;
   display: flex;
   align-items: center;
   transition: all 0.3s ease;
 
   &.empty {
-    color: $text-secondary;
+    color: var(--text-secondary);
     font-style: italic;
   }
 }
@@ -95,7 +96,7 @@
 
 .loadingPlaceholder {
   padding: 0.75rem 1rem;
-  background: #f8f9fa;
+  background: var(--background-color);
   border: 2px solid transparent;
   border-radius: 0.5rem;
   min-height: 1.5rem;
@@ -106,7 +107,7 @@
 .loadingBar {
   width: 100%;
   height: 1rem;
-  background: linear-gradient(90deg, #e9ecef 25%, #dee2e6 50%, #e9ecef 75%);
+  background: linear-gradient(90deg, var(--border-color) 25%, var(--text-muted) 50%, var(--border-color) 75%);
   background-size: 200% 100%;
   border-radius: 0.25rem;
   animation: shimmer 1.5s infinite;
@@ -182,38 +183,60 @@
   }
 }
 
-// Dark theme support (for future use)
+// Dark theme support using CSS variables
 .formGroup.dark {
   .formInput {
-    background: #2d3748;
-    border-color: #4a5568;
-    color: white;
+    background: var(--surface-color);
+    border-color: var(--border-color);
+    color: var(--text-primary);
 
     &::placeholder {
-      color: #a0aec0;
+      color: var(--text-secondary);
     }
 
     &:focus {
-      border-color: $primary;
-      box-shadow: 0 0 0 3px rgba(0, 123, 186, 0.2);
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(46, 134, 171, 0.2);
+    }
+
+    &:hover:not(:focus) {
+      border-color: var(--text-muted);
+    }
+
+    &.disabled {
+      background: var(--background-color);
+      color: var(--text-secondary);
+      border-color: var(--border-color);
     }
   }
 
   .formValue {
-    background: #2d3748;
-    color: white;
+    background: var(--background-color);
+    color: var(--text-primary);
+
+    &.empty {
+      color: var(--text-secondary);
+    }
   }
 
   .formLabel {
-    color: #e2e8f0;
+    color: var(--text-primary);
+  }
+
+  .fieldIcon {
+    color: var(--primary-color);
+  }
+
+  .required {
+    color: var(--alert-warning);
   }
 
   .loadingPlaceholder {
-    background: #2d3748;
+    background: var(--background-color);
   }
 
   .loadingBar {
-    background: linear-gradient(90deg, #4a5568 25%, #718096 50%, #4a5568 75%);
+    background: linear-gradient(90deg, var(--border-color) 25%, var(--text-muted) 50%, var(--border-color) 75%);
     background-size: 200% 100%;
   }
 }
