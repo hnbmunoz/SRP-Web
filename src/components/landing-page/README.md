@@ -179,10 +179,44 @@ All styles use SCSS modules for scoped styling. Key customization points:
 - SCSS/Sass support
 - Modern browser with CSS Grid and Flexbox support
 
+## SEO Optimization
+
+This landing page includes comprehensive SEO optimization features. For detailed information about SEO implementation and best practices, see:
+
+- **[SEO Optimization Guide](../../../docs/landing-page-seo-optimization.md)** - Comprehensive SEO documentation covering technical SEO, content optimization, performance, and monitoring
+- **[SEO Implementation Guide](../../../docs/seo-implementation-guide.md)** - Step-by-step implementation instructions with code examples
+
+### SEO Features Included
+
+- **Dynamic Meta Tags**: Customizable title, description, and keywords
+- **Structured Data**: JSON-LD schemas for Organization, Software Application, and FAQ
+- **Open Graph Tags**: Optimized social media sharing
+- **Performance Optimization**: Core Web Vitals optimization
+- **Semantic HTML**: Proper heading hierarchy and ARIA labels
+- **Mobile Optimization**: Responsive design with mobile-first approach
+
+### SEO-Enhanced Components
+
+- **[`LandingPageWithSEO.tsx`](./LandingPageWithSEO.tsx)** - Enhanced landing page with SEO optimization
+- **[`SEOHead`](../SEO/SEOHead.tsx)** - Reusable SEO component for dynamic meta tags
+- **Structured Data Schemas** - Pre-configured schemas for healthcare applications
+
+### Quick SEO Implementation
+
+```tsx
+import LandingPageWithSEO from './components/landing-page/LandingPageWithSEO';
+
+// Use the SEO-optimized version
+<Route path="/" element={<LandingPageWithSEO />} />
+
+// Or with variants for different landing pages
+<Route path="/demo" element={<LandingPageWithSEO variant="demo" />} />
+```
+
 ## License
 
 This component is designed to be freely used and modified for your projects.
 
 ## Support
 
-For customization help or issues, refer to the inline comments in each component file.
+For customization help or issues, refer to the inline comments in each component file. For SEO-related questions, consult the comprehensive SEO documentation in the [`docs/`](../../../docs/) directory.

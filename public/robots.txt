@@ -1,0 +1,16 @@
+# Robots.txt for MedPortal Healthcare Management System
+# Allow all web crawlers to access the site
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://medportal.com/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+
+# Disallow crawling of sensitive areas (if any in the future)
+# Disallow: /admin/
+# Disallow: /api/
+# Disallow: /private/

@@ -6,11 +6,11 @@ import styles from './LandingPage.module.scss';
 
 const LandingPage: React.FC = () => {
   return (
-    <div className={styles.landingPage}>
+    <main className={styles.landingPage} role="main">
       <HeroSection />
       <FeaturesSection />
       <CallToActionSection />
-    </div>
+    </main>
   );
 };
 

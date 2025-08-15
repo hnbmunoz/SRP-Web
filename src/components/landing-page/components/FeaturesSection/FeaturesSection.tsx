@@ -56,74 +56,80 @@ const features: Feature[] = [
 
 const FeaturesSection: React.FC = () => {
   return (
-    <section id="features" className={styles.features}>
+    <section id="features" className={styles.features} aria-labelledby="features-title">
       <div className={styles.container}>
-        <div className={styles.header}>
+        <header className={styles.header}>
           <div className={styles.badge}>
             <span className={styles.badgeText}>Powerful Features</span>
           </div>
-          <h2 className={styles.title}>
+          <h2 id="features-title" className={styles.title}>
             Everything you need to manage
             <span className={styles.highlight}> healthcare operations</span>
           </h2>
           <p className={styles.subtitle}>
-            Our comprehensive platform provides all the tools healthcare providers need 
+            Our comprehensive platform provides all the tools healthcare providers need
             to deliver exceptional patient care while maintaining the highest security standards.
           </p>
-        </div>
+        </header>
 
-        <div className={styles.featuresGrid}>
+        <div className={styles.featuresGrid} role="list" aria-label="Healthcare management features">
           {features.map((feature, index) => (
-            <div 
-              key={feature.id} 
+            <article
+              key={feature.id}
               className={styles.featureCard}
               style={{ animationDelay: `${index * 0.1}s` }}
+              role="listitem"
+              aria-labelledby={`feature-${feature.id}-title`}
             >
-              <div className={styles.cardHeader}>
-                <div className={styles.iconWrapper}>
-                  <span className={styles.icon}>{feature.icon}</span>
+              <header className={styles.cardHeader}>
+                <div className={styles.iconWrapper} role="img" aria-label={`${feature.title} feature icon`}>
+                  <span className={styles.icon} aria-hidden="true">{feature.icon}</span>
                 </div>
-                <h3 className={styles.cardTitle}>{feature.title}</h3>
-              </div>
+                <h3 id={`feature-${feature.id}-title`} className={styles.cardTitle}>{feature.title}</h3>
+              </header>
               <p className={styles.cardDescription}>{feature.description}</p>
-              <ul className={styles.benefitsList}>
+              <ul className={styles.benefitsList} aria-label={`${feature.title} benefits`}>
                 {feature.benefits.map((benefit, benefitIndex) => (
                   <li key={benefitIndex} className={styles.benefit}>
-                    <span className={styles.checkIcon}>✓</span>
+                    <span className={styles.checkIcon} aria-hidden="true">✓</span>
                     {benefit}
                   </li>
                 ))}
               </ul>
-              <div className={styles.cardFooter}>
-                <button className={styles.learnMoreButton}>
+              <footer className={styles.cardFooter}>
+                <button
+                  className={styles.learnMoreButton}
+                  aria-label={`Learn more about ${feature.title}`}
+                >
                   Learn More
-                  <span className={styles.buttonArrow}>→</span>
+                  <span className={styles.buttonArrow} aria-hidden="true">→</span>
                 </button>
-              </div>
-            </div>
+              </footer>
+            </article>
           ))}
         </div>
 
-        <div className={styles.statsSection}>
-          <div className={styles.statsGrid}>
-            <div className={styles.statItem}>
-              <div className={styles.statNumber}>500+</div>
+        <aside className={styles.statsSection} aria-labelledby="stats-title">
+          <h3 id="stats-title" className="sr-only">Platform Statistics</h3>
+          <div className={styles.statsGrid} role="list" aria-label="Key platform metrics">
+            <div className={styles.statItem} role="listitem">
+              <div className={styles.statNumber} aria-label="500 plus">500+</div>
               <div className={styles.statLabel}>Healthcare Facilities</div>
             </div>
-            <div className={styles.statItem}>
-              <div className={styles.statNumber}>1M+</div>
+            <div className={styles.statItem} role="listitem">
+              <div className={styles.statNumber} aria-label="1 million plus">1M+</div>
               <div className={styles.statLabel}>Patient Records</div>
             </div>
-            <div className={styles.statItem}>
-              <div className={styles.statNumber}>99.99%</div>
+            <div className={styles.statItem} role="listitem">
+              <div className={styles.statNumber} aria-label="99.99 percent">99.99%</div>
               <div className={styles.statLabel}>System Uptime</div>
             </div>
-            <div className={styles.statItem}>
+            <div className={styles.statItem} role="listitem">
               <div className={styles.statNumber}>24/7</div>
               <div className={styles.statLabel}>Support Available</div>
             </div>
           </div>
-        </div>
+        </aside>
       </div>
     </section>
   );
