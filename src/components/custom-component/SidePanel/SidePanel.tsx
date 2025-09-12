@@ -16,8 +16,9 @@ const SidePanel: React.FC = () => {
   const [accordionStates, setAccordionStates] = React.useState<Record<string, boolean>>({
     'Patient Management': false,
     'Clinical Operations': false,
-    'Emergency Services': false,
-    'Laboratory & Diagnostics': false,
+    // 'Emergency Services': false,
+    // 'Laboratory & Diagnostics': false,
+    'Administrative Functions': false,
   });
 
   // Function to toggle individual accordion states - only one can be open at a time
@@ -114,27 +115,37 @@ const SidePanel: React.FC = () => {
         'Treatment Plans',
         'Prescription Management',
         'Lab Results',
-        'Vital Signs Monitor'
+        'Vital Signs Monitor',
+        'Medical Supplies Inventory'
       ]
     },
+    // {
+    //   title: 'Emergency Services',
+    //   items: [
+    //     'Emergency Admissions',
+    //     'Trauma Cases',
+    //     'ICU Management',
+    //     'Ambulance Dispatch',
+    //     'Critical Care'
+    //   ]
+    // },
+    // {
+    //   title: 'Laboratory & Diagnostics',
+    //   items: [
+    //     'Lab Test Orders',
+    //     'Imaging Requests',
+    //     'Pathology Reports',
+    //     'Blood Bank',
+    //     'Radiology Results'
+    //   ]
+    // },
     {
-      title: 'Emergency Services',
+      title: 'Administrative Functions',
       items: [
-        'Emergency Admissions',
-        'Trauma Cases',
-        'ICU Management',
-        'Ambulance Dispatch',
-        'Critical Care'
-      ]
-    },
-    {
-      title: 'Laboratory & Diagnostics',
-      items: [
-        'Lab Test Orders',
-        'Imaging Requests',
-        'Pathology Reports',
-        'Blood Bank',
-        'Radiology Results'
+        'Staff Management',
+        'Payroll',
+        'Financial Reports',
+        'Audit Logs'
       ]
     }
   ];
@@ -208,7 +219,7 @@ const SidePanel: React.FC = () => {
             />
           </div>
 
-          <div className={styles.navigationSection}>
+          {/* <div className={styles.navigationSection}>
             <h3 className={styles.sectionTitle}>Specialized Care</h3>
             <NavigationAccordion
               title={medicalModules[2].title}
@@ -221,6 +232,17 @@ const SidePanel: React.FC = () => {
               title={medicalModules[3].title}
               items={medicalModules[3].items}
               isOpen={accordionStates[medicalModules[3].title]}
+              onToggle={toggleAccordion}
+              onNavigate={handleNavigation}
+            />
+          </div> */}
+
+          <div className={styles.navigationSection}>
+            <h3 className={styles.sectionTitle}>Administrative</h3>
+            <NavigationAccordion
+              title={medicalModules[2].title}
+              items={medicalModules[2].items}
+              isOpen={accordionStates[medicalModules[2].title]}
               onToggle={toggleAccordion}
               onNavigate={handleNavigation}
             />
