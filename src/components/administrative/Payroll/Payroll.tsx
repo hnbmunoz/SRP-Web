@@ -119,7 +119,7 @@ const Payroll: React.FC = () => {
     });
   }, [payrollRecords, filters]);
 
-  const handleFilterChange = (key: keyof PayrollFilters, value: any) => {
+  const handleFilterChange = (key: keyof PayrollFilters, value: string | undefined) => {
     setFilters(prev => ({
       ...prev,
       [key]: value
@@ -134,8 +134,8 @@ const Payroll: React.FC = () => {
     return baseSalary + overtime + bonuses;
   };
 
-  const calculateNetPay = (grossPay: number, deductions: any) => {
-    const totalDeductions = Object.values(deductions).reduce((sum: number, val: any) => sum + (val || 0), 0);
+  const calculateNetPay = (grossPay: number, deductions: Record<string, number>) => {
+    const totalDeductions = Object.values(deductions).reduce((sum: number, val: number) => sum + (val || 0), 0);
     return grossPay - totalDeductions;
   };
 

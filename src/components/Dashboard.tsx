@@ -8,10 +8,9 @@ interface DashboardCardProps {
   description: string;
   items: string[];
   path: string;
-  icon?: string;
 }
 
-const DashboardCard: React.FC<DashboardCardProps> = ({ title, description, items, path, icon: _icon }) => {
+const DashboardCard: React.FC<DashboardCardProps> = ({ title, description, items, path }) => {
   const navigate = useNavigate();
 
   const handleCardClick = () => {

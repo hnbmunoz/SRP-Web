@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../store/authStore';
 import { useNavigate, Link } from 'react-router-dom';
 import styles from './Signup.module.scss';
 import LoadingOverlay from './custom-component/Loading';
 import Dropdown, { type DropdownOption } from './custom-component/Dropdown/Dropdown';
-
-interface SignupProps {}
 
 interface FormErrors {
   name?: string;
@@ -25,7 +23,7 @@ interface FormTouched {
   terms: boolean;
 }
 
-const Signup: React.FC<SignupProps> = () => {
+const Signup: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -102,7 +100,7 @@ const Signup: React.FC<SignupProps> = () => {
   };
 
   // Form validation
-  const validateField = (field: string, value: string): string | undefined => {
+  const validateField = useCallback((field: string, value: string): string | undefined => {
     switch (field) {
       case 'name':
         if (!value.trim()) return 'Full name is required';
@@ -141,7 +139,7 @@ const Signup: React.FC<SignupProps> = () => {
       default:
         return undefined;
     }
-  };
+  }, [formData.password, selectedSpecialties.length, acceptTerms]);
 
   // Real-time validation
   useEffect(() => {
@@ -161,7 +159,7 @@ const Signup: React.FC<SignupProps> = () => {
     });
     
     setErrors(newErrors);
-  }, [formData, acceptTerms, selectedSpecialties, touched]);
+  }, [formData, acceptTerms, selectedSpecialties, touched, validateField]);
 
   const handleInputChange = (field: keyof typeof formData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));

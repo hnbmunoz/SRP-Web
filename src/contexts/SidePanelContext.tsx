@@ -14,7 +14,7 @@ interface SidePanelProviderProps {
   children: ReactNode;
 }
 
-export const SidePanelProvider: React.FC<SidePanelProviderProps> = ({ children }) => {
+const SidePanelProvider: React.FC<SidePanelProviderProps> = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -54,6 +54,9 @@ export const SidePanelProvider: React.FC<SidePanelProviderProps> = ({ children }
   );
 };
 
+export { SidePanelProvider };
+
+// eslint-disable-next-line react-refresh/only-export-components
 export const useSidePanelContext = (): SidePanelContextType => {
   const context = useContext(SidePanelContext);
   if (context === undefined) {

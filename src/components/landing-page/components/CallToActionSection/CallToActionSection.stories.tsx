@@ -44,7 +44,7 @@ export const WithInteraction: Story = {
       },
     },
   },
-  play: async ({ canvasElement: _canvasElement }) => {
+  play: async () => {
     // This would be used for interaction testing in a real scenario
     // For now, it just shows the component in its default state
   },

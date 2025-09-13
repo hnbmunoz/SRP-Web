@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { usePageStore } from '../../../store/pageStore';
 import NavigationAccordion from '../NavigationAccordion/NavigationAccordion';
 import styles from './SidePanel.module.scss';
 import { FaHome } from 'react-icons/fa';
@@ -10,7 +9,6 @@ import Tooltip from '../Tooltip/Tooltip';
 
 const SidePanel: React.FC = () => {
   const { isOpen, setIsOpen, toggleSidePanel } = useSidePanelContext();
-  const {  } = usePageStore();
   
   // State for managing individual accordion open/close states
   const [accordionStates, setAccordionStates] = React.useState<Record<string, boolean>>({
@@ -62,9 +60,9 @@ const SidePanel: React.FC = () => {
     }
   };
 
-  const closeSidePanel = () => {
+  const closeSidePanel = useCallback(() => {
     setIsOpen(false);
-  };
+  }, [setIsOpen]);
 
 
   // Close panel when clicking outside (mobile only)
@@ -94,7 +92,7 @@ const SidePanel: React.FC = () => {
       document.removeEventListener('keydown', handleEscape);
       document.body.style.overflow = 'unset';
     };
-  }, [isOpen]);
+  }, [isOpen, closeSidePanel]);
 
   // Medical navigation data
   const medicalModules = [

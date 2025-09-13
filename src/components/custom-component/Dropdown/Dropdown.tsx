@@ -7,7 +7,9 @@ import Select, {
   type StylesConfig,
   type DropdownIndicatorProps,
   type ClearIndicatorProps,
-  type InputActionMeta
+  type InputActionMeta,
+  type OptionProps,
+  type SingleValueProps
 } from 'react-select';
 import { ChevronDownIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import styles from './Dropdown.module.scss';
@@ -73,7 +75,7 @@ const ClearIndicator = (props: ClearIndicatorProps<DropdownOption>) => {
 };
 
 // Custom option component to support icons
-const Option = (props: any) => {
+const Option = (props: OptionProps<DropdownOption>) => {
   const { data, children } = props;
   return (
     <components.Option {...props}>
@@ -86,7 +88,7 @@ const Option = (props: any) => {
 };
 
 // Custom single value component to support icons
-const SingleValue = (props: any) => {
+const SingleValue = (props: SingleValueProps<DropdownOption>) => {
   const { data, children } = props;
   return (
     <components.SingleValue {...props}>
@@ -132,7 +134,7 @@ const Dropdown: React.FC<DropdownProps> = ({
 }) => {
   // Generate custom styles for react-select
   const customStyles: StylesConfig<DropdownOption, boolean> = {
-    control: (provided, _state) => ({
+    control: (provided) => ({
       ...provided,
       minHeight: size === 'small' ? '36px' : size === 'large' ? '52px' : '44px',
       border: 'none',

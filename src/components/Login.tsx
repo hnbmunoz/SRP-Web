@@ -4,14 +4,12 @@ import { useNavigate, Link } from 'react-router-dom';
 import styles from './Login.module.scss';
 import LoadingOverlay from './custom-component/Loading';
 
-interface LoginProps {}
-
 interface FormErrors {
   username?: string;
   password?: string;
 }
 
-const Login: React.FC<LoginProps> = () => {
+const Login: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);

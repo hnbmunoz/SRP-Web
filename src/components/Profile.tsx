@@ -3,6 +3,7 @@ import styles from './Profile.module.scss';
 import ProfileSection from './custom-component/ProfileSection/ProfileSection';
 import FormField from './custom-component/FormField/FormField';
 import { useAuth } from '../store/authStore';
+import type { User } from '../store/authStore';
 import { useTheme, useThemeClass } from '../store/themeStore';
 import {
   FaUser,
@@ -37,7 +38,7 @@ interface UserProfile {
 }
 
 // Helper function to convert auth user to profile format
-const convertAuthUserToProfile = (authUser: any): UserProfile => {
+const convertAuthUserToProfile = (authUser: User): UserProfile => {
   const nameParts = authUser.name.split(' ');
   const firstName = nameParts[0] || '';
   const lastName = nameParts.slice(1).join(' ') || '';

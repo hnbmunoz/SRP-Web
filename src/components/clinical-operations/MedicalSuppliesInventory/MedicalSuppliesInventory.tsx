@@ -105,7 +105,7 @@ const MedicalSuppliesInventory: React.FC = () => {
     });
   }, [supplies, filters]);
 
-  const handleFilterChange = (key: keyof InventoryFilters, value: any) => {
+  const handleFilterChange = (key: keyof InventoryFilters, value: string | boolean | undefined) => {
     setFilters(prev => ({
       ...prev,
       [key]: value
@@ -133,7 +133,7 @@ const MedicalSuppliesInventory: React.FC = () => {
     }
   };
 
-  const getStockLevelClass = (current: number, minimum: number, maximum: number) => {
+  const getStockLevelClass = (current: number, _minimum: number, maximum: number) => {
     const percentage = (current / maximum) * 100;
     if (percentage <= 20) return styles.low;
     if (percentage <= 50) return styles.medium;

@@ -224,7 +224,7 @@ export const useAuthStore = create<AuthState>()(
             await simulateDelay(500);
             const newToken = generateMockToken(user);
             set({ token: newToken, isLoading: false });
-          } catch (error) {
+          } catch {
             set({
               error: 'Failed to refresh token',
               isLoading: false

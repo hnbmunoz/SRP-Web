@@ -33,7 +33,7 @@ const AuthDemo: React.FC = () => {
     e.preventDefault();
     try {
       await login(loginForm);
-    } catch (error) {
+    } catch {
       // Error is handled by the store
     }
   };
@@ -42,7 +42,7 @@ const AuthDemo: React.FC = () => {
     e.preventDefault();
     try {
       await register(registerForm);
-    } catch (error) {
+    } catch {
       // Error is handled by the store
     }
   };

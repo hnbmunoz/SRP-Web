@@ -1,5 +1,5 @@
 import React from 'react';
-import { OverlayTrigger, Tooltip as BootstrapTooltip } from 'react-bootstrap';
+import { OverlayTrigger, Tooltip as BootstrapTooltip, type TooltipProps as BootstrapTooltipProps } from 'react-bootstrap';
 
 interface TooltipProps {
   content: string;
@@ -20,7 +20,7 @@ const Tooltip: React.FC<TooltipProps> = ({
     return children;
   }
 
-  const renderTooltip = (props: any) => (
+  const renderTooltip = (props: BootstrapTooltipProps) => (
     <BootstrapTooltip id="tooltip" {...props}>
       {content}
     </BootstrapTooltip>

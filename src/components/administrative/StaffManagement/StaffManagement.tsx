@@ -108,7 +108,7 @@ const StaffManagement: React.FC = () => {
     });
   }, [staff, filters]);
 
-  const handleFilterChange = (key: keyof StaffFilters, value: any) => {
+  const handleFilterChange = (key: keyof StaffFilters, value: string | undefined) => {
     setFilters(prev => ({
       ...prev,
       [key]: value
