@@ -43,6 +43,7 @@ export default defineConfig({
       apply: 'build'
     })
   ],
+  base: '/SRP-Web/' ,
   css: {
     preprocessorOptions: {
       scss: {
