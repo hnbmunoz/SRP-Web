@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import Login from '../components/Login';
 import Signup from '../components/Signup';
 import NotFound from '../pages/error-pages/NotFound';
@@ -11,6 +11,8 @@ const PublicRoutes = () => {
       <Route path="/" element={<Login />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
+      {/* SRP-Web public route - redirects to dashboard (will trigger authentication) */}
+      <Route path="/SRP-Web" element={<Navigate to="/" replace />} />
       {/* System Settings - Redirect to 403 Forbidden (full screen) */}
       <Route path="/system-settings" element={<Forbidden />} />
       <Route path="/system-settings/*" element={<Forbidden />} />
