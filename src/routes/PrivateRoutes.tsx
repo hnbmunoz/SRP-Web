@@ -10,6 +10,7 @@ import Forbidden from '../pages/error-pages/Forbidden';
 import MedicalSuppliesInventory from '../components/clinical-operations/MedicalSuppliesInventory';
 import StaffManagement from '../components/administrative/StaffManagement';
 import Payroll from '../components/administrative/Payroll';
+import PatientRecords from '../components/patient-management/PatientRecords';
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
   const { isMobile } = useSidePanelContext();
@@ -51,7 +52,7 @@ const PrivateRoutesContent = () => {
       
       {/* Patient Management Routes */}
       <Route path="/patient-management" element={<MainLayout><div style={{padding: '2rem'}}><h1>Patient Management</h1><p>Patient management module coming soon...</p></div></MainLayout>} />
-      <Route path="/patient-management/patient-records" element={<MainLayout><div style={{padding: '2rem'}}><h1>Patient Records</h1><p>Patient records interface coming soon...</p></div></MainLayout>} />
+      <Route path="/patient-management/patient-records" element={<MainLayout><PatientRecords /></MainLayout>} />
       <Route path="/patient-management/admission-forms" element={<MainLayout><div style={{padding: '2rem'}}><h1>Admission Forms</h1><p>Admission forms interface coming soon...</p></div></MainLayout>} />
       <Route path="/patient-management/discharge-summary" element={<MainLayout><div style={{padding: '2rem'}}><h1>Discharge Summary</h1><p>Discharge summary interface coming soon...</p></div></MainLayout>} />
       <Route path="/patient-management/medical-history" element={<MainLayout><div style={{padding: '2rem'}}><h1>Medical History</h1><p>Medical history interface coming soon...</p></div></MainLayout>} />
