@@ -199,6 +199,7 @@ const Payroll: React.FC = () => {
     setFormErrors({});
   };
 
+
   const validateForm = (): boolean => {
     const errors: Record<string, string> = {};
 
@@ -572,7 +573,7 @@ const Payroll: React.FC = () => {
             </div>
 
             {modalMode === 'view' && selectedRecord ? (
-              <div className={styles.form}>
+              <div>
                 <div className={styles.formGrid}>
                   <div><strong>Employee:</strong> {selectedRecord.employeeName}</div>
                   <div><strong>Employee ID:</strong> {selectedRecord.employeeId}</div>

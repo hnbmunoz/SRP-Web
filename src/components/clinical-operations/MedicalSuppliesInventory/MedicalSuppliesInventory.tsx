@@ -1,27 +1,47 @@
 import React, { useState, useMemo } from 'react';
-import { 
-  FaBoxes, 
-  FaDollarSign, 
-  FaExclamationTriangle, 
-  FaTimes, 
-  FaClock, 
+import {
+  FaBoxes,
+  FaDollarSign,
+  FaExclamationTriangle,
+  FaTimes,
+  FaClock,
   FaSkull,
   FaPlus,
   FaEdit,
   FaTrash,
+  FaEye,
   FaDownload,
   FaFilter,
   FaSearch
 } from 'react-icons/fa';
-import type { MedicalSupply, InventoryFilters, InventoryStats } from './types';
+import type { MedicalSupply, InventoryFilters, InventoryStats, InventoryFormData } from './types';
 import { SupplyCategory, SupplyStatus } from './types';
-import { sampleMedicalSupplies } from './sampleData';
+import { sampleMedicalSupplies, locations, suppliers } from './sampleData';
 import styles from './MedicalSuppliesInventory.module.scss';
 
 const MedicalSuppliesInventory: React.FC = () => {
-  const [supplies] = useState<MedicalSupply[]>(sampleMedicalSupplies);
+  const [supplies, setSupplies] = useState<MedicalSupply[]>(sampleMedicalSupplies);
   const [filters, setFilters] = useState<InventoryFilters>({});
   const [isLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [modalMode, setModalMode] = useState<'create' | 'edit' | 'view'>('create');
+  const [selectedSupply, setSelectedSupply] = useState<MedicalSupply | null>(null);
+  const [formData, setFormData] = useState<InventoryFormData>({
+    name: '',
+    category: SupplyCategory.MEDICATIONS,
+    description: '',
+    currentStock: 0,
+    minimumStock: 0,
+    maximumStock: 0,
+    unit: '',
+    unitCost: 0,
+    supplier: '',
+    expirationDate: '',
+    batchNumber: '',
+    location: '',
+    status: SupplyStatus.IN_STOCK
+  });
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
   // Calculate inventory statistics
   const stats: InventoryStats = useMemo(() => {
@@ -116,6 +136,131 @@ const MedicalSuppliesInventory: React.FC = () => {
     setFilters({});
   };
 
+  const openModal = (mode: 'create' | 'edit' | 'view', supply?: MedicalSupply) => {
+    setModalMode(mode);
+    setSelectedSupply(supply || null);
+    
+    if (mode === 'create') {
+      setFormData({
+        name: '',
+        category: SupplyCategory.MEDICATIONS,
+        description: '',
+        currentStock: 0,
+        minimumStock: 0,
+        maximumStock: 0,
+        unit: '',
+        unitCost: 0,
+        supplier: '',
+        expirationDate: '',
+        batchNumber: '',
+        location: '',
+        status: SupplyStatus.IN_STOCK
+      });
+    } else if (supply) {
+      setFormData({
+        name: supply.name,
+        category: supply.category,
+        description: supply.description,
+        currentStock: supply.currentStock,
+        minimumStock: supply.minimumStock,
+        maximumStock: supply.maximumStock,
+        unit: supply.unit,
+        unitCost: supply.unitCost,
+        supplier: supply.supplier,
+        expirationDate: supply.expirationDate || '',
+        batchNumber: supply.batchNumber || '',
+        location: supply.location,
+        status: supply.status
+      });
+    }
+    
+    setFormErrors({});
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setSelectedSupply(null);
+    setFormErrors({});
+  };
+
+  const validateForm = (): boolean => {
+    const errors: Record<string, string> = {};
+
+    if (!formData.name.trim()) errors.name = 'Supply name is required';
+    if (!formData.description.trim()) errors.description = 'Description is required';
+    if (!formData.unit.trim()) errors.unit = 'Unit is required';
+    if (!formData.supplier.trim()) errors.supplier = 'Supplier is required';
+    if (!formData.location.trim()) errors.location = 'Location is required';
+    if (formData.currentStock < 0) errors.currentStock = 'Current stock cannot be negative';
+    if (formData.minimumStock < 0) errors.minimumStock = 'Minimum stock cannot be negative';
+    if (formData.maximumStock <= 0) errors.maximumStock = 'Maximum stock must be greater than 0';
+    if (formData.minimumStock >= formData.maximumStock) errors.minimumStock = 'Minimum stock must be less than maximum stock';
+    if (formData.unitCost < 0) errors.unitCost = 'Unit cost cannot be negative';
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!validateForm()) return;
+
+    const now = new Date().toISOString();
+    
+    if (modalMode === 'create') {
+      const newSupply: MedicalSupply = {
+        id: `MS${String(supplies.length + 1).padStart(3, '0')}`,
+        name: formData.name,
+        category: formData.category,
+        description: formData.description,
+        currentStock: formData.currentStock,
+        minimumStock: formData.minimumStock,
+        maximumStock: formData.maximumStock,
+        unit: formData.unit,
+        unitCost: formData.unitCost,
+        supplier: formData.supplier,
+        expirationDate: formData.expirationDate || undefined,
+        batchNumber: formData.batchNumber || undefined,
+        location: formData.location,
+        status: formData.status,
+        lastUpdated: now,
+        createdAt: now
+      };
+      
+      setSupplies(prev => [...prev, newSupply]);
+    } else if (modalMode === 'edit' && selectedSupply) {
+      const updatedSupply: MedicalSupply = {
+        ...selectedSupply,
+        name: formData.name,
+        category: formData.category,
+        description: formData.description,
+        currentStock: formData.currentStock,
+        minimumStock: formData.minimumStock,
+        maximumStock: formData.maximumStock,
+        unit: formData.unit,
+        unitCost: formData.unitCost,
+        supplier: formData.supplier,
+        expirationDate: formData.expirationDate || undefined,
+        batchNumber: formData.batchNumber || undefined,
+        location: formData.location,
+        status: formData.status,
+        lastUpdated: now
+      };
+      
+      setSupplies(prev => prev.map(s => s.id === selectedSupply.id ? updatedSupply : s));
+    }
+    
+    closeModal();
+  };
+
+  const handleDelete = (supply: MedicalSupply) => {
+    if (window.confirm(`Are you sure you want to delete ${supply.name}?`)) {
+      setSupplies(prev => prev.filter(s => s.id !== supply.id));
+    }
+  };
+
   const getStatusBadgeClass = (status: SupplyStatus) => {
     switch (status) {
       case SupplyStatus.IN_STOCK:
@@ -172,7 +317,10 @@ const MedicalSuppliesInventory: React.FC = () => {
       <div className={styles.header}>
         <h1>Medical Supplies Inventory</h1>
         <div className={styles.headerActions}>
-          <button className={`${styles.actionButtons} ${styles.primary}`}>
+          <button
+            className={`${styles.actionButtons} ${styles.primary}`}
+            onClick={() => openModal('create')}
+          >
             <FaPlus /> Add New Supply
           </button>
           <button className={styles.actionButtons}>
@@ -410,10 +558,23 @@ const MedicalSuppliesInventory: React.FC = () => {
                   </td>
                   <td>
                     <div className={styles.actionButtons}>
-                      <button title="Edit Supply">
+                      <button
+                        title="View Details"
+                        onClick={() => openModal('view', supply)}
+                      >
+                        <FaEye />
+                      </button>
+                      <button
+                        title="Edit Supply"
+                        onClick={() => openModal('edit', supply)}
+                      >
                         <FaEdit />
                       </button>
-                      <button title="Delete Supply" className={styles.danger}>
+                      <button
+                        title="Delete Supply"
+                        className={styles.danger}
+                        onClick={() => handleDelete(supply)}
+                      >
                         <FaTrash />
                       </button>
                     </div>
@@ -424,6 +585,224 @@ const MedicalSuppliesInventory: React.FC = () => {
           </table>
         )}
       </div>
+
+      {/* Modal */}
+      {showModal && (
+        <div className={styles.modal} onClick={(e) => e.target === e.currentTarget && closeModal()}>
+          <div className={styles.modalContent}>
+            <div className={styles.modalHeader}>
+              <h2>
+                {modalMode === 'create' && 'Add New Supply'}
+                {modalMode === 'edit' && 'Edit Supply'}
+                {modalMode === 'view' && 'Supply Details'}
+              </h2>
+              <button className={styles.closeButton} onClick={closeModal}>
+                <FaTimes />
+              </button>
+            </div>
+
+            {modalMode === 'view' && selectedSupply ? (
+              <div className={styles.form}>
+                <div className={styles.formGrid}>
+                  <div><strong>Name:</strong> {selectedSupply.name}</div>
+                  <div><strong>Category:</strong> {selectedSupply.category}</div>
+                  <div><strong>Description:</strong> {selectedSupply.description}</div>
+                  <div><strong>Current Stock:</strong> {selectedSupply.currentStock} {selectedSupply.unit}</div>
+                  <div><strong>Minimum Stock:</strong> {selectedSupply.minimumStock} {selectedSupply.unit}</div>
+                  <div><strong>Maximum Stock:</strong> {selectedSupply.maximumStock} {selectedSupply.unit}</div>
+                  <div><strong>Unit Cost:</strong> {formatCurrency(selectedSupply.unitCost)}</div>
+                  <div><strong>Supplier:</strong> {selectedSupply.supplier}</div>
+                  <div><strong>Location:</strong> {selectedSupply.location}</div>
+                  <div><strong>Status:</strong> {selectedSupply.status}</div>
+                  {selectedSupply.expirationDate && <div><strong>Expiration Date:</strong> {formatDate(selectedSupply.expirationDate)}</div>}
+                  {selectedSupply.batchNumber && <div><strong>Batch Number:</strong> {selectedSupply.batchNumber}</div>}
+                  <div><strong>Last Updated:</strong> {formatDate(selectedSupply.lastUpdated)}</div>
+                </div>
+              </div>
+            ) : (
+              <form className={styles.form} onSubmit={handleSubmit}>
+                <div className={styles.formGrid}>
+                  <div className={styles.formGroup}>
+                    <label htmlFor="name">Supply Name <span className={styles.required}>*</span></label>
+                    <input
+                      id="name"
+                      type="text"
+                      value={formData.name}
+                      onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                      className={formErrors.name ? styles.error : ''}
+                    />
+                    {formErrors.name && <div className={styles.errorMessage}>{formErrors.name}</div>}
+                  </div>
+
+                  <div className={styles.formGroup}>
+                    <label htmlFor="category">Category <span className={styles.required}>*</span></label>
+                    <select
+                      id="category"
+                      value={formData.category}
+                      onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value as SupplyCategory }))}
+                    >
+                      {Object.values(SupplyCategory).map(category => (
+                        <option key={category} value={category}>{category}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className={styles.formGroup}>
+                    <label htmlFor="description">Description <span className={styles.required}>*</span></label>
+                    <textarea
+                      id="description"
+                      value={formData.description}
+                      onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+                      className={formErrors.description ? styles.error : ''}
+                    />
+                    {formErrors.description && <div className={styles.errorMessage}>{formErrors.description}</div>}
+                  </div>
+
+                  <div className={styles.formGroup}>
+                    <label htmlFor="unit">Unit <span className={styles.required}>*</span></label>
+                    <input
+                      id="unit"
+                      type="text"
+                      placeholder="e.g., tablets, pieces, bottles"
+                      value={formData.unit}
+                      onChange={(e) => setFormData(prev => ({ ...prev, unit: e.target.value }))}
+                      className={formErrors.unit ? styles.error : ''}
+                    />
+                    {formErrors.unit && <div className={styles.errorMessage}>{formErrors.unit}</div>}
+                  </div>
+
+                  <div className={styles.formGroup}>
+                    <label htmlFor="currentStock">Current Stock <span className={styles.required}>*</span></label>
+                    <input
+                      id="currentStock"
+                      type="number"
+                      min="0"
+                      value={formData.currentStock}
+                      onChange={(e) => setFormData(prev => ({ ...prev, currentStock: Number(e.target.value) }))}
+                      className={formErrors.currentStock ? styles.error : ''}
+                    />
+                    {formErrors.currentStock && <div className={styles.errorMessage}>{formErrors.currentStock}</div>}
+                  </div>
+
+                  <div className={styles.formGroup}>
+                    <label htmlFor="minimumStock">Minimum Stock <span className={styles.required}>*</span></label>
+                    <input
+                      id="minimumStock"
+                      type="number"
+                      min="0"
+                      value={formData.minimumStock}
+                      onChange={(e) => setFormData(prev => ({ ...prev, minimumStock: Number(e.target.value) }))}
+                      className={formErrors.minimumStock ? styles.error : ''}
+                    />
+                    {formErrors.minimumStock && <div className={styles.errorMessage}>{formErrors.minimumStock}</div>}
+                  </div>
+
+                  <div className={styles.formGroup}>
+                    <label htmlFor="maximumStock">Maximum Stock <span className={styles.required}>*</span></label>
+                    <input
+                      id="maximumStock"
+                      type="number"
+                      min="1"
+                      value={formData.maximumStock}
+                      onChange={(e) => setFormData(prev => ({ ...prev, maximumStock: Number(e.target.value) }))}
+                      className={formErrors.maximumStock ? styles.error : ''}
+                    />
+                    {formErrors.maximumStock && <div className={styles.errorMessage}>{formErrors.maximumStock}</div>}
+                  </div>
+
+                  <div className={styles.formGroup}>
+                    <label htmlFor="unitCost">Unit Cost <span className={styles.required}>*</span></label>
+                    <input
+                      id="unitCost"
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      value={formData.unitCost}
+                      onChange={(e) => setFormData(prev => ({ ...prev, unitCost: Number(e.target.value) }))}
+                      className={formErrors.unitCost ? styles.error : ''}
+                    />
+                    {formErrors.unitCost && <div className={styles.errorMessage}>{formErrors.unitCost}</div>}
+                  </div>
+
+                  <div className={styles.formGroup}>
+                    <label htmlFor="supplier">Supplier <span className={styles.required}>*</span></label>
+                    <select
+                      id="supplier"
+                      value={formData.supplier}
+                      onChange={(e) => setFormData(prev => ({ ...prev, supplier: e.target.value }))}
+                      className={formErrors.supplier ? styles.error : ''}
+                    >
+                      <option value="">Select Supplier</option>
+                      {suppliers.map(supplier => (
+                        <option key={supplier} value={supplier}>{supplier}</option>
+                      ))}
+                    </select>
+                    {formErrors.supplier && <div className={styles.errorMessage}>{formErrors.supplier}</div>}
+                  </div>
+
+                  <div className={styles.formGroup}>
+                    <label htmlFor="location">Location <span className={styles.required}>*</span></label>
+                    <select
+                      id="location"
+                      value={formData.location}
+                      onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))}
+                      className={formErrors.location ? styles.error : ''}
+                    >
+                      <option value="">Select Location</option>
+                      {locations.map(location => (
+                        <option key={location} value={location}>{location}</option>
+                      ))}
+                    </select>
+                    {formErrors.location && <div className={styles.errorMessage}>{formErrors.location}</div>}
+                  </div>
+
+                  <div className={styles.formGroup}>
+                    <label htmlFor="status">Status</label>
+                    <select
+                      id="status"
+                      value={formData.status}
+                      onChange={(e) => setFormData(prev => ({ ...prev, status: e.target.value as SupplyStatus }))}
+                    >
+                      {Object.values(SupplyStatus).map(status => (
+                        <option key={status} value={status}>{status}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className={styles.formGroup}>
+                    <label htmlFor="expirationDate">Expiration Date</label>
+                    <input
+                      id="expirationDate"
+                      type="date"
+                      value={formData.expirationDate}
+                      onChange={(e) => setFormData(prev => ({ ...prev, expirationDate: e.target.value }))}
+                    />
+                  </div>
+
+                  <div className={styles.formGroup}>
+                    <label htmlFor="batchNumber">Batch Number</label>
+                    <input
+                      id="batchNumber"
+                      type="text"
+                      value={formData.batchNumber}
+                      onChange={(e) => setFormData(prev => ({ ...prev, batchNumber: e.target.value }))}
+                    />
+                  </div>
+                </div>
+
+                <div className={styles.formActions}>
+                  <button type="button" className={styles.cancel} onClick={closeModal}>
+                    Cancel
+                  </button>
+                  <button type="submit" className={styles.submit}>
+                    {modalMode === 'create' ? 'Add Supply' : 'Update Supply'}
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

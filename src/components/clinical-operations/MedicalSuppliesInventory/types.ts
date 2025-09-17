@@ -88,6 +88,22 @@ export interface InventoryFilters {
   showExpiringSoon?: boolean;
 }
 
+export interface InventoryFormData {
+  name: string;
+  category: SupplyCategory;
+  description: string;
+  currentStock: number;
+  minimumStock: number;
+  maximumStock: number;
+  unit: string;
+  unitCost: number;
+  supplier: string;
+  expirationDate?: string;
+  batchNumber?: string;
+  location: string;
+  status: SupplyStatus;
+}
+
 export interface InventoryStats {
   totalItems: number;
   totalValue: number;

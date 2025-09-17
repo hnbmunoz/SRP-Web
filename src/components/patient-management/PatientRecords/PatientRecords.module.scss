@@ -423,6 +423,108 @@
   }
 }
 
+.form {
+  .formGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+
+    &.fullWidth {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-primary);
+
+      .required {
+        color: #ef4444;
+        margin-left: 0.25rem;
+      }
+    }
+
+    input, select, textarea {
+      padding: 0.75rem;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      background: var(--input-background);
+      color: var(--text-primary);
+      font-size: 0.875rem;
+
+      &:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+      }
+
+      &.error {
+        border-color: #ef4444;
+        box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.1);
+      }
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .errorMessage {
+      color: #ef4444;
+      font-size: 0.75rem;
+      margin-top: 0.25rem;
+    }
+  }
+
+  .formActions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+
+    button {
+      padding: 0.75rem 1.5rem;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &.cancel {
+        background: var(--button-background);
+        color: var(--text-primary);
+
+        &:hover {
+          background: var(--button-hover-background);
+        }
+      }
+
+      &.submit {
+        background: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+
+        &:hover {
+          background: var(--primary-hover);
+        }
+
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+}
+
 .emptyState {
   text-align: center;
   padding: 3rem;
@@ -512,6 +614,20 @@
 
     .modalContent {
       padding: 1rem;
+    }
+  }
+
+  .form {
+    .formGrid {
+      grid-template-columns: 1fr;
+    }
+
+    .formActions {
+      flex-direction: column;
+
+      button {
+        width: 100%;
+      }
     }
   }
 
